@@ -1,0 +1,8 @@
+TOUT SUR LA MEME MACHINE, PAS DE RESEAU, PAS DE TCP/IP
+SSH possible
+
+Développer un jeu :
+	multijoueur
+	mettre en oeuvre au moins 2 techniques de communication inter-processus
+	mettre en place le protocole (décrire/documenter) d'échange et de communication
+	mettre en place les règles du jeu
