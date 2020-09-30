@@ -17,3 +17,20 @@ Convention nommage :
   Camel Case : maVariable
   Si plusieurs fonctions/var se regroupent : traitement_maVar1, traitement_maVar2
   Commentaire/nommage en anglais
+
+
+
+
+
+
+
+#################################
+#                               #
+#  BBBBBBBBBBBBBBBBBBBBBBBBBBB  #
+#  BBBBBBBBBBBBBBBBBBBBBBBBBBB  #
+#                o              #
+#                               #
+#                               #
+#                               #
+#             ===               #
+#################################
