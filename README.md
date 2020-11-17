@@ -1,5 +1,7 @@
 # KassBrIIk
 
+![KassBrIIk logo](./ressources/logo_kassbriik.png)
+
 ## Introduction
 
 A highschool project during our third year in information technology school.
@@ -41,8 +43,6 @@ _You **can** combine them_
 
 ## Images
 
-![This is a alt text.](/image/sample.png "This is a sample image.")
-
 ## Links
 
 You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
@@ -58,3 +58,5 @@ You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
 
 [Valentin Guiberteau](https://github.com/ValentinIG2I)  
 [Corentin Destrez](https://github.com/Lafie-rage)
+
+![KassBrIIk wide logo](./ressources/kassbriik.png)
