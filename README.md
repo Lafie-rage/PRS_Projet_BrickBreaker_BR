@@ -12,6 +12,8 @@ The goal was to make a multiplayer game and also make it as simple as possible t
 This game will **only run on linux** at the moment.  
 Feel free to help us if you want to make it runnable on any other OS.
 
+A french version of this README is avaiblabe [here](README.fr.md).
+
 ## Retrieving the project
 
 ### Getting the sources to play
