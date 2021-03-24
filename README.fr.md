@@ -70,9 +70,40 @@ $ ./server 1
 $ ./client.sh single
 ```
 
-### Jouer à plusieurs sur la même machine
-
 ### Jouer à plusieurs sur des machines différentes
+
+Afin de jouer à plusieurs, vous devrez nécessairement passer par plusieurs machines. En effet, il n'a pas été rendu possible d'utiliser le même clavier pour jouer à plusieurs sur une machine.  
+Comme pour jouer seul, voici les commandes à exécuter dans le répertoire du jeu :  
+```sh
+$ make multiplayer
+```
+Il vous faudra ensuite configurer un service ssh et créer des comptes, voici la démarche à suivre.
+
+#### Créaction des comptes utilisateurs
+```sh
+# ./creating_players_accounts.sh
+$ ./move_client.#!/bin/sh
+$ ./update_client_sh.sh
+```
+
+#### Mise en place du serveur SSH
+
+##### Installation du serveur SSH
+
+Si vous n'avez jamais installer de serveur SSH, voici la marche à suivre.
+Si vous êtes sous Ubuntu/Debian ça se passe [ici](https://doc.ubuntu-fr.org/ssh#installation_du_serveur_ssh).
+Pour les autres distributions Linux, je vous invite à vous renseigner sur le net. :)
+
+##### Configuration du serveur SSH
+
+Pour la configuration du serveur SSH, je vous conseil dans un premier temps de sauvegarder la configuration actuel de votre serveur si jamais vous vouliez la réutiliser.
+Pour ceci :
+```sh
+# cp /etc/ssh/sshd.config <dossierDeSauvegarde>
+# cp /etc/ssh/sshd.config.d <dossierDeSauvegarde>
+```
+
+
 
 
 
