@@ -26,7 +26,7 @@ if !  grep -q "^player:" /etc/group
 for playerNb in {1..8}
 do
   # Creating home directory if not exist
-  if [[ ! -e /home/player$playerNb ]];
+  if [[ ! -d /home/player$playerNb ]];
   then
     mkdir /home/player$playerNb
   fi
