@@ -82,7 +82,7 @@ Il vous faudra ensuite configurer un service ssh et créer des comptes, voici la
 #### Créaction des comptes utilisateurs
 ```sh
 # ./creating_players_accounts.sh
-$ ./move_client.#!/bin/sh
+$ ./move_client.sh
 $ ./update_client_sh.sh
 ```
 
