@@ -9,7 +9,7 @@
 
 for playerNb in {1..8}
 do
-  cp client /home/player$playerNb/
+  cp build/client /home/player$playerNb/
 done
 
 exit 0
