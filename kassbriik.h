@@ -1,8 +1,8 @@
 /**
- * @file kaasbriik_signal.h
- * @author Corentin DESTREZ & Valentin GUIBERTEAU
- * @date 09 Apr 2021
- * @brief Header of the client's and server's library
+ * \file kaasbriik_signal.h
+ * \author Corentin DESTREZ & Valentin GUIBERTEAU
+ * \date 09 Apr 2021
+ * \brief Header of the client's and server's library
  *
  * This library containts the definition of some useful values to communicate
  * between the server and the clients
@@ -17,6 +17,24 @@
 #ifndef KAASBRIIK_H
 #define KAASBRIIK_H
 
+
+/*****************************************************************************/
+/*                                    GLOBAL                                 */
+/*---------------------------------------------------------------------------*/
+/*                Define the values used for the inter-process               */
+/*              communication by mail box as well as their value             */
+/*****************************************************************************/
+
+/**
+ * \def CHECK(sts, msg)
+ * \brief Check the return status of a function.
+ *
+ * If the return is -1, priting "msg" in stderr and the errno. Then exit with -1 code.
+ *
+ */
+#define CHECK(sts, msg) if ((sts) == -1) { perror(msg); exit(-1);}
+
+
 /*****************************************************************************/
 /*                                   MAIL BOX                                */
 /*---------------------------------------------------------------------------*/
@@ -28,29 +46,83 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 
-
+/**
+ * \def MAX_BODY_MSG_SIZE
+ * \brief Size maximal of a message to send or read from the message queue.
+ */
 #define MAX_BODY_MSG_SIZE 256
+
+/**
+ * \def MSG_MODE
+ * \brief Opening mode of the message queue.
+ *
+ */
 #define MSG_MODE 0666
-// Request structure for mail box
+
+/**
+ * \def MSG_KEY
+ * \brief Key of the message queue.
+ *
+ */
+#define MSG_KEY ftok("./", 1)
+
+/**
+ * \def CONNECTION_MSG_TYPE
+ * \brief Message type for client connection.
+ *
+ * Message send by the client to connect to the server.
+ *
+ */
+#define CONNECTION_MSG_TYPE 1
+
+/**
+ * \def END_GAME_MSG_TYPE
+ * \brief Message type to notify end of the game.
+ *
+ * Message send by a client to notify the server that a player has end his game.
+ *
+ */
+#define END_GAME_MSG_TYPE 2
+
+/**
+ * \def START_GAME_MSG_TYPE
+ * \brief Message type to start the game.
+ *
+ * Message send by server to all clients to notify them that they must start the game.
+ *
+ */
+#define START_GAME_MSG_TYPE 3
+
+/**
+ * \def CONNECTION_NOTIFY_MSG
+ * \brief Response of the server when the client is connected.
+ *
+ */
+#define CONNECTION_NOTIFY_MSG "You are connected"
+
+/**
+ * \struct t_body
+ * \brief Body of a t_request.
+ *
+ * Containts the message to send and the source pid.
+ *
+ */
 typedef struct body {
   pid_t pid;
-  char msg[MAX_BODY_MSG_SIZE];
+  char message[MAX_BODY_MSG_SIZE];
 } t_body;
 
+/**
+ * \struct t_request
+ * \brief Request send via the message queue.
+ *
+ * t_reuest are the messages send via the message queue.
+ * It's composed of the body (as t_body) and the type of request.
+ *
+ */
 typedef struct request {
   long type;
   t_body body;
 } t_request;
-
-// Mail box key for its creation
-#define MSG_KEY ftok("./", 1)
-// Type of message client send to serveur when it's trying to connect.
-#define CONNECTION_MSG_TYPE 1
-// Type of message client send to serveur when it has end its game.
-#define END_GAME_MSG_TYPE 2
-// Type of message server send to client when it should start the game.
-#define START_GAME_MSG_TYPE 3
-// Message send by server to notify the client that he's connected.
-#define CONNECTION_NOTIFY_MSG "You are connected"
 
 #endif
