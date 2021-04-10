@@ -16,10 +16,11 @@ exec = $(client_exec) $(server_exec)
 
 all : $(addprefix $(BUILD_FOLDER)/, $(exec))
 
-client : $(BUILD_FOLDER)/client
+client : client.c
+	$(CC) -o $(BUILD_FOLDER)/$@ $^
 
-server : $(BUILD_FOLDER)/server
-
+server : server.c $(BUILD_FOLDER)/server_kassbriik.a
+	$(CC) -o $(BUILD_FOLDER)/$@ $^
 # Compile server only
 $(BUILD_FOLDER)/server : server.c $(BUILD_FOLDER)/server_kassbriik.a
 	$(CC) -o $@ $^

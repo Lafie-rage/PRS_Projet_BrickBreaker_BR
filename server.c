@@ -21,7 +21,8 @@
 #include "kassbriik.h"
 #include "server_kassbriik.h"
 
-#define CHECK(sts, msg) if ((sts) == -1) { perror(msg); exit(-1);}
+
+void retrieveClientsInformations(int msgId, t_clients_list *clients, int nbOfClientsToWait);
 
 /**
  * \fn void getMessageQueue(int *msgId)
@@ -48,7 +49,7 @@ void getMessageQueue(int *msgId);
 void sendMessageToClient(int msgId, int clientPid, const char *buffer);
 
 /**
- * \fn void sendMessageToClient(int msgId, int type, const char *msg)
+ * \fn void notifyClients(int msgId, t_clients_list clients, const char *buffer)
  * \brief Send a message to multiple clients via the message queue.
  *
  * Send the message to a list of clients that is send as argument.
@@ -61,31 +62,44 @@ void sendMessageToClient(int msgId, int clientPid, const char *buffer);
  */
 void notifyClients(int msgId, t_clients_list clients, const char *buffer);
 
+/**
+ * \fn void awaitResponseOfClients(int msgId, t_clients_list clients)
+ * \brief Await the response of all clients in the list.
+ *
+ * \param msgId Pointer where the file descriptor of the message queue that must be used.
+ * \param clients The list of the clients that must respond.
+ */
+void awaitResponseOfClients(int msgId, t_clients_list clients);
+
 int main(int argc, char *argv[]) {
   if(argc != 2 || atoi(argv[1]) < 1) {
     fprintf(stderr, "--- ERROR : You cannot run this program without saying how many clients will play. Please do it following this format ./server <nbClients> with a number of client greater than 0\n");
     exit(-1);
   }
-  int msgId, i;
+  int msgId;
   int nbOfClientsToWait = atoi(argv[1]);
   t_clients_list clients;
-  t_request request;
   initClientList(&clients, nbOfClientsToWait);
-
-  printf("Waiting for %d clients to be connected before starting...\n", nbOfClientsToWait);
-
   getMessageQueue(&msgId);
-  for(i = 0; i < nbOfClientsToWait; i++) {
-    printf("Waiting client n° %d to connect\n", i);
-    CHECK(msgrcv(msgId, &request, sizeof(t_body), CONNECTION_MSG_TYPE, 0), "--- ERROR : Cannot read message from mail box");
-    clients.clients[i] = request.body.pid;
-    printf("Client %d connected\n", clients.clients[i]);
-    sendMessageToClient(msgId, clients.clients[i], "");
-  }
-  puts("Notifying client that they must start");
+  retrieveClientsInformations(msgId, &clients, nbOfClientsToWait);
+
   notifyClients(msgId, clients, "");
 
   CHECK(msgctl(msgId, IPC_RMID, NULL), "--- ERROR : Cannot delete the mail box between server and client.");
+}
+
+void retrieveClientsInformations(int msgId, t_clients_list *clients, int nbOfClientsToWait) {
+  int i;
+  t_request request;
+  printf("Waiting for %d clients to be connected before starting...\n", nbOfClientsToWait);
+  for(i = 0; i < nbOfClientsToWait; i++) {
+    printf("Waiting client n° %d to connect\n", i+1);
+    CHECK(msgrcv(msgId, &request, sizeof(t_body), CONNECTION_MSG_TYPE, 0), "--- ERROR : Cannot read message from mail box");
+    clients->clients[i].pid = request.body.pid;
+    clients->clients[i].username = request.body.message;
+    printf("Client with pid %d connected which name is %s\n", clients->clients[i].pid, clients->clients[i].username);
+    sendMessageToClient(msgId, clients->clients[i].pid, "");
+  }
 }
 
 void getMessageQueue(int *msgId) {
@@ -98,7 +112,7 @@ void sendMessageToClient(int msgId, int clientPid, const char *buffer) {
   t_request request;
   request.type = clientPid;
   request.body.pid = getpid();
-  strcpy(request.body.msg, buffer);
+  strcpy(request.body.message, buffer);
   CHECK(msgsnd(msgId, &request, sizeof(t_body), 0), "--- ERROR : Cannot send message to client");
 }
 
@@ -106,11 +120,22 @@ void sendMessageToClient(int msgId, int clientPid, const char *buffer) {
 void notifyClients(int msgId, t_clients_list clients, const char *buffer) {
   int i;
   t_request notify;
+  puts("Notifying client that they must start");
   notify.body.pid = getpid();
-  strcpy(notify.body.msg, buffer);
+  strcpy(notify.body.message, buffer);
   for(i = 0; i < clients.size; i++) {
-    printf("i : %d\tclient pid : %d\n", i, clients.clients[i]);
-    notify.type = clients.clients[i];
+    notify.type = clients.clients[i].pid;
     CHECK(msgsnd(msgId, &notify, sizeof(t_body), 0), "--- ERROR : Cannot notify client via mail box");
   }
+  awaitResponseOfClients(msgId, clients);
+}
+
+void awaitResponseOfClients(int msgId, t_clients_list clients) {
+  int i;
+  t_request notify;
+  puts("Waiting for client to respond");
+  for(i = 0; i < clients.size; i++) {
+    //CHECK(msgsnd(msgId, &notify, sizeof(t_body), 0), "--- ERROR : Cannot notify client via mail box");
+  }
+
 }

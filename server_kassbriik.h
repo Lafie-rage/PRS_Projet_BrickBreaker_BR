@@ -1,11 +1,11 @@
 /**
- * @file server_kaasbriik.h
- * @author Corentin DESTREZ & Valentin GUIBERTEAU
- * @date 09 Apr 2021
- * @brief Header of the server's library
+ * /file server_kaasbriik.h
+ * /author Corentin DESTREZ & Valentin GUIBERTEAU
+ * /date 09 Apr 2021
+ * /brief Header of the server's library
  *
  * This library containts the definition of some useful values, functions
- * and structures that are used by the server
+ * and structures that are used by the server.
  *
  * This library also include thoose :
  *  -> sys/types.h
@@ -24,11 +24,57 @@
 /*              that will be used by the server to store clients             */
 /*****************************************************************************/
 
-typedef struct {
-  int *clients;
+
+/**
+ * \struct t_client
+ * \brief Structure of a client view by the server.
+ *
+ * Contains the PID of the client & the username of the player.
+ *
+ */
+typedef struct client {
+  int pid;
+  char *username;
+} t_client;
+
+/**
+ * \struct clients_list
+ * \brief A list of clients.
+ *
+ * Containts the lists of the clients the server knows or want to communicate to as array of t_client.
+ * Also contains is size.
+ * The clients undefined have the PID -1.
+ * Those clients are in the client's array from size to the length of the array.
+ * Avoid browsing the array with anything else than a for loop from 0 to size-1.
+ *
+ */
+typedef struct clients_list {
+  t_client *clients;
   size_t size;
 } t_clients_list;
 
+/**
+ * \fn void initClientList(t_clients_list *a, size_t size)
+ * \brief Initialise the t_clients_list structure.
+ *
+ * Initialise the send structure depending on the send size.
+ * This function will set up the size of the list and initialise every value of the array to -1 as default value.
+ *
+ * \param a The t_clients_list to initialise.
+ * \param size The size of the list.
+ */
 void initClientList(t_clients_list *a, size_t size);
+
+/**
+ * \fn void removeClientFromList(t_clients_list *a, client_t client)
+ * \brief Remove a client from the t_clients_list sent.
+ *
+ * Check if the list containts the client send in parameter.
+ * If it is, remove it and decrease the size of the list.
+ *
+ * \param a The t_clients_list in which you to remove a client.
+ * \param client The client to remove from the list.
+ */
+void removeClientFromList(t_clients_list *a, t_client client);
 
 #endif
