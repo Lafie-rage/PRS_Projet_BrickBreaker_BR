@@ -9,7 +9,7 @@
  *
  */
 
-#include "kaasbriik_signal.h" // also include signal.h
+#include "kassbriik_signal.h" // also include signal.h
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
