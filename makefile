@@ -16,18 +16,18 @@ exec = $(client_exec) $(server_exec)
 
 all : $(addprefix $(BUILD_FOLDER)/, $(exec))
 
-client : client.c
-	$(CC) -o $(BUILD_FOLDER)/$@ $^
+server : server.c $(BUILD_FOLDER)/server_kassbriik.a kassbriik.h
+	$(CC) -o $(BUILD_FOLDER)/$@ $(word 1, $^) $(word 2, $^)
 
-server : server.c $(BUILD_FOLDER)/server_kassbriik.a
-	$(CC) -o $(BUILD_FOLDER)/$@ $^
+client : client.c kassbriik.h
+	$(CC) -o $(BUILD_FOLDER)/$@ $<
 # Compile server only
-$(BUILD_FOLDER)/server : server.c $(BUILD_FOLDER)/server_kassbriik.a
-	$(CC) -o $@ $^
+$(BUILD_FOLDER)/server : server.c $(BUILD_FOLDER)/server_kassbriik.a kassbriik.h
+	$(CC) -o $@ $(word 1, $^) $(word 2, $^)
 
 # Compile client only
-$(BUILD_FOLDER)/client : client.c
-	$(CC) -o $@ $^
+$(BUILD_FOLDER)/client : client.c kassbriik.h
+	$(CC) -o $@ $<
 
 # Refresh client executable and move it to the player's homes
 #sudo ./move_client.sh
