@@ -35,6 +35,7 @@
 typedef struct client {
   int pid;
   char *username;
+  int score;
 } t_client;
 
 /**
@@ -62,6 +63,7 @@ typedef struct clients_list {
  *
  * \param a The t_clients_list to initialise.
  * \param size The size of the list.
+ *
  */
 void initClientList(t_clients_list *a, size_t size);
 
@@ -69,12 +71,28 @@ void initClientList(t_clients_list *a, size_t size);
  * \fn void removeClientFromList(t_clients_list *a, client_t client)
  * \brief Remove a client from the t_clients_list sent.
  *
- * Check if the list containts the client send in parameter.
+ * Check if the list containts the client's pid send in parameter.
  * If it is, remove it and decrease the size of the list.
  *
- * \param a The t_clients_list in which you to remove a client.
- * \param client The client to remove from the list.
+ * \param a The list of clients in which you want to remove a client.
+ * \param clientPid The client's pid to remove from the list.
+ *
  */
-void removeClientFromList(t_clients_list *a, t_client client);
+void removeClientFromList(t_clients_list *a, int clientPid);
+
+/**
+ * \fn t_client *getPlayerNameByPid(t_clients_list a, int clientPid)
+ * \brief Return the client identifying it by it's pid.
+ *
+ * Check if the list containts the client's pid send in parameter.
+ * If it is, return the client.
+ *
+ * \param a The list clients that should contain the client we're looking for.
+ * \param clientPid The pid of the client we are looking for.
+ *
+ * \return The client that we're looking for. If the client you're looking for is not in the list, return NULL.
+ *
+ */
+t_client *getClientByPid(t_clients_list a, int clientPid);
 
 #endif

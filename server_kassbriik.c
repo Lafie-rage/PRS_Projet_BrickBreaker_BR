@@ -24,11 +24,23 @@ void initClientList(t_clients_list *a, size_t size) {
     a->clients[0].pid = -1;
 }
 
-void removeClientFromList(t_clients_list *a, t_client client) {
-  // int i, j;
-  // for(i = 0; i < size; i++)
-  //   if(a->clients.pid == client.pid) {
-  //     for()
-  //   }
+void removeClientFromList(t_clients_list *a, int clientPid) {
+  int i, j;
+  for(i = 0; i < a->size; i++) {
+    if(a->clients[i].pid == clientPid) {
+      for(j = i; j < a->size - 1; j++)
+        a->clients[j] = a->clients[j+1];
+    }
+  }
+  a->size--;
+}
 
+t_client *getClientByPid(t_clients_list a, int clientPid) {
+  int i;
+  for(i = 0; i < a.size; i++) {
+    if(a.clients[i].pid == clientPid) {
+      return &(a.clients[i]);
+    }
+  }
+  return NULL;
 }
