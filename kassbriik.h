@@ -49,6 +49,7 @@
 /**
  * \def MAX_BODY_MSG_SIZE
  * \brief Size maximal of a message to send or read from the message queue.
+ *
  */
 #define MAX_BODY_MSG_SIZE 256
 
@@ -76,29 +77,48 @@
 #define CONNECTION_MSG_TYPE 1
 
 /**
- * \def END_GAME_MSG_TYPE
- * \brief Message type to notify end of the game.
- *
- * Message send by a client to notify the server that a player has end his game.
- *
- */
-#define END_GAME_MSG_TYPE 2
-
-/**
- * \def START_GAME_MSG_TYPE
- * \brief Message type to start the game.
- *
- * Message send by server to all clients to notify them that they must start the game.
- *
- */
-#define START_GAME_MSG_TYPE 3
-
-/**
  * \def CONNECTION_NOTIFY_MSG
  * \brief Response of the server when the client is connected.
  *
  */
 #define CONNECTION_NOTIFY_MSG "You are connected"
+
+/**
+ * \def START_GAME_MSG_TYPE
+ * \brief Message type to start the game.
+ *
+ * Type of the message send by server to all clients to notify them that they must start the game.
+ *
+ */
+#define START_GAME_MSG_TYPE 2
+
+/**
+ * \def GAME_STARTED_MSG_TYPE
+ * \brief Message type to notify that the game is started.
+ *
+ * Type of the message send by clients to the server to notify him that it has started the game.
+ *
+ */
+#define GAME_STARTED_MSG_TYPE 3
+
+/**
+ * \def END_GAME_MSG_TYPE
+ * \brief Message type to notify end of the game.
+ *
+ * Type of the message send by a client to notify the server that a player has end his game.
+ * When a message of this type is send, it must contain the score of the player.
+ *
+ */
+#define END_GAME_MSG_TYPE 4
+
+/**
+ * \def SEND_SCORE_MSG_TYPE
+ * \brief Message type to notify that score is received
+ *
+ * Type of the message send by the server to notify a client that it has received its player's score.
+ *
+ */
+#define SCORE_RECEIVED_MSG_TYPE 5
 
 /**
  * \struct t_body
