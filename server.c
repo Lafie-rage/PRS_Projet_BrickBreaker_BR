@@ -263,16 +263,10 @@ void writePlayersScore(int msgId, t_clients_list clients, int *shmId, struct shm
   // The shm should never be used before the server, but adding it make it safer
   createAndOpenShmAndSemaphore(shmId, shmBuffer, &shmPtr, &semId);
   // Iterates through the list to write the scores in the shm
-  printf("List size : %d\n", clients.size);
   shmPtr->size = clients.size;
   for(i = 0; i < shmPtr->size; i++) {
     shmPtr->scores[i].score = clients.clients[i].score;
     strcpy(shmPtr->scores[i].username, clients.clients[i].username);
-  }
-  for(i = 0; i < shmPtr->size; i++) {
-    printf("Client %d\n", i+1);
-    printf("\tscore %d\n", shmPtr->scores[i].score);
-    printf("\tusername %s\n", shmPtr->scores[i].username);
   }
   CHECK(shmdt(shmPtr), "--- ERROR : Cannot release the shm for the clients.");
   sem_close(&semId);
