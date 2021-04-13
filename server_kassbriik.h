@@ -51,7 +51,7 @@ typedef struct client {
  */
 typedef struct clients_list {
   t_client *clients;
-  size_t size;
+  int size;
 } t_clients_list;
 
 /**
@@ -79,6 +79,18 @@ void initClientList(t_clients_list *a, size_t size);
  *
  */
 void removeClientFromList(t_clients_list *a, int clientPid);
+
+/**
+ * \fn void copyClientsList(t_clients_list *dest, t_clients_list src)
+ * \brief Copy a source list in the dest list.
+ *
+ * Copy the src list in the dest preventing from accessing to the dest list when modifying the src list.
+ *
+ * \param dest The list in which the src will be copied.
+ * \param src The list that will be copied into the dest.
+ *
+ */
+void copyClientsList(t_clients_list *dest, t_clients_list src);
 
 /**
  * \fn t_client *getPlayerNameByPid(t_clients_list a, int clientPid)

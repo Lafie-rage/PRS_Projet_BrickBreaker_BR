@@ -10,6 +10,8 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 /*****************************************************************************/
 /*                              CUSTOM LIBRARIES                             */
@@ -33,6 +35,18 @@ void removeClientFromList(t_clients_list *a, int clientPid) {
     }
   }
   a->size--;
+}
+
+void copyClientsList(t_clients_list *dest, t_clients_list src) {
+  int i;
+  dest->size = src.size;
+  dest->clients = malloc(dest->size * sizeof(t_client));
+  for(i = 0; i < dest->size; i++) {
+    dest->clients[i].pid = src.clients[i].pid;
+    dest->clients[i].username = malloc(strlen(src.clients[i].username) * sizeof(char));
+    strcpy(dest->clients[i].username, src.clients[i].username);
+    dest->clients[i].score = src.clients[i].score;
+  }
 }
 
 t_client *getClientByPid(t_clients_list a, int clientPid) {
