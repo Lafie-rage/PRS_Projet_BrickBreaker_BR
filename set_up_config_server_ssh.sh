@@ -7,6 +7,15 @@
 #
 # This script will save you current ssh server's configuration in the OLD_SSH_SERVER_CONFIG folder.
 # Then replace /etc/ssh/sshd_config with the ssh_config in the ssh_server_config folder and remove the /etc/ssh/sshd_config.d folder.
+# Must be executed as root
+
+# Check if your rooted
+if [ $(whoami) != root ]
+  then
+    echo "Run this script as root"
+    exit 1
+fi
+
 
 # Create folder if not exists and manage versions ?
 OLD_PATH="OLD_SSH_SERVER_CONFIG"

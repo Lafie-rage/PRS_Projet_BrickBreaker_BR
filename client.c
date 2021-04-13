@@ -19,6 +19,7 @@
 /*                              CUSTOM LIBRARIES                             */
 /*****************************************************************************/
 #include "kassbriik.h"
+#include "game_ui.h"
 
 
 /**
@@ -133,8 +134,7 @@ int main(int argc, char *argv[]) {
   askServerToLaunchTheGame(msgId);
   notifyServerThatGameHasStarted(msgId);
   puts("Game will start now !");
-  // TODO : Launch the UI Game
-  int score = rand() % 200;
+  int score = startGameUI();
   sendScore(msgId, score);
   retrieveScores(msgId, &scores);
   printFinalRank(msgId, scores);
