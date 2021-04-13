@@ -81,7 +81,7 @@
  * \brief Key to acces to the shm.
  *
  */
-#define SHM_KEY ftok("./shm_kassbriik", 1)
+#define SHM_KEY ftok("/home/player/shm_kassbriik", 1)
 
 /**
  * \struct t_score
@@ -156,7 +156,7 @@ void copyScoreList(t_scores_list *dest, t_scores_list src);
  * \brief Key ot acces to the message queue.
  *
  */
-#define MSG_KEY ftok("./msg_kassbriik", 1)
+#define MSG_KEY ftok("/home/player/msg_kassbriik", 1)
 
 /**
  * \def CONNECTION_MSG_TYPE
