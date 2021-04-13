@@ -5,11 +5,18 @@
 # date 16 Nov 2020
 # brief Executable for the client
 #
-# This script move the client executable in each player's directory
+# This script move the client executable in the player's directory
+# Must be executed as root
 
-for playerNb in {1..8}
-do
-  cp build/client /home/player$playerNb/
-done
+# Check if your rooted
+if [ $(whoami) != root ]
+  then
+    echo "Run this script as root"
+    exit 1
+fi
+
+cp build/client /bin/client
+chmod +s /bin/client
+chmod +r /bin/client
 
 exit 0
