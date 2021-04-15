@@ -16,7 +16,6 @@ if [ $(whoami) != root ]
 fi
 
 cp build/client /bin/client
-chmod +s /bin/client
-chmod +r /bin/client
+chmod +r /bin/client # remove the restictired mode on this command
 
 exit 0

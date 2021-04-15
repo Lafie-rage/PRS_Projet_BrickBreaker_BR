@@ -42,3 +42,5 @@ fi
 
 # Replace current config with the game's one
 sudo cp $SSH_CONFIG_PATH/sshd_config /etc/ssh/sshd_config
+
+# TODO : Ajouter génération clé rsa si possilbe
