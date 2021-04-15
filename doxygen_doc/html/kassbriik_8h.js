@@ -1,0 +1,28 @@
+var kassbriik_8h =
+[
+    [ "score", "structscore.html", "structscore" ],
+    [ "scores_list", "structscores__list.html", "structscores__list" ],
+    [ "body", "structbody.html", "structbody" ],
+    [ "request", "structrequest.html", "structrequest" ],
+    [ "CHECK", "kassbriik_8h.html#ad3fe337408f16c132c895f2b59326410", null ],
+    [ "CONNECTION_MSG_TYPE", "kassbriik_8h.html#a0118c63c161e4da398fa9d4e0f11879c", null ],
+    [ "CONNECTION_NOTIFY_MSG", "kassbriik_8h.html#a0e71ded84aa1312e91ea06eed7e5c654", null ],
+    [ "END_GAME_MSG_TYPE", "kassbriik_8h.html#a4143446cc4b5108a3ab124ac3c5b2e2e", null ],
+    [ "GAME_STARTED_MSG_TYPE", "kassbriik_8h.html#aaeece299664ddd15098e689c50d6a5a7", null ],
+    [ "MAX_BODY_MSG_SIZE", "kassbriik_8h.html#a1a92f29d280d7de1b5bc07f16dc933bf", null ],
+    [ "MAX_CLIENTS", "kassbriik_8h.html#a0a8f91f93d75a07f0ae45077db45b3eb", null ],
+    [ "MSG_KEY", "kassbriik_8h.html#acebb45f6d9740063956da4fc574b2b04", null ],
+    [ "MSG_MODE", "kassbriik_8h.html#a9fd0f43f293031d18a7b06276db6d664", null ],
+    [ "SCORE_READ_MSG_TYPE", "kassbriik_8h.html#a76c877269a8e697e34ca79d0a26665f5", null ],
+    [ "SCORE_RECEIVED_MSG_TYPE", "kassbriik_8h.html#a66695a5fa7a9e8bd3257dbdafe0b256e", null ],
+    [ "SCORE_WRITTEN_MSG", "kassbriik_8h.html#ab20bc32ef9a15349cc85db5174d18364", null ],
+    [ "SEM_SHM_NAME", "kassbriik_8h.html#a53ad8675df847e45a63bcb40ff793745", null ],
+    [ "SHM_KEY", "kassbriik_8h.html#a31d581c814a72a1c69bd228b078d6b69", null ],
+    [ "START_GAME_MSG", "kassbriik_8h.html#a5aace718615ca24772083216b8322d95", null ],
+    [ "t_body", "kassbriik_8h.html#a8256930a164ca52f5a7532acc9a2725d", null ],
+    [ "t_request", "kassbriik_8h.html#a033810dbd32f066a84c8af1fa6b1cae7", null ],
+    [ "t_score", "kassbriik_8h.html#aceeef36f61cc8b9309737f48b70323db", null ],
+    [ "t_scores_list", "kassbriik_8h.html#a3922a6d636a23086466165dc8227070c", null ],
+    [ "copyScoreList", "kassbriik_8h.html#a38c0549e2a30edd606ea23cccd0ebde1", null ],
+    [ "sortScoreList", "kassbriik_8h.html#ae830f425ca982cfa3e5361fca4cbe6f0", null ]
+];

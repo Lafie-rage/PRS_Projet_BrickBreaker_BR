@@ -1,0 +1,130 @@
+\hypertarget{server__kassbriik_8h}{}\section{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/server\+\_\+kassbriik.h File Reference}
+\label{server__kassbriik_8h}\index{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/server\+\_\+kassbriik.\+h@{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/server\+\_\+kassbriik.\+h}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+Include dependency graph for server\+\_\+kassbriik.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{server__kassbriik_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server__kassbriik_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structclient}{client}
+\item 
+struct \hyperlink{structclients__list}{clients\+\_\+list}
+\begin{DoxyCompactList}\small\item\em A list of clients. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structclient}{client} \hyperlink{server__kassbriik_8h_ab703f4f76628473adcf9246202352fe9}{t\+\_\+client}
+\item 
+typedef struct \hyperlink{structclients__list}{clients\+\_\+list} \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{server__kassbriik_8h_a28775a21a7c6ce6d81b13835bc0b7f38}{init\+Client\+List} (\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$a, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Initialise the t\+\_\+clients\+\_\+list structure. \end{DoxyCompactList}\item 
+void \hyperlink{server__kassbriik_8h_a54f08f249535c5a9673652db9081dfe2}{remove\+Client\+From\+List} (\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$a, int client\+Pid)
+\item 
+void \hyperlink{server__kassbriik_8h_ac42238b4d85d941aa8cbe94cebe6ef7a}{copy\+Clients\+List} (\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$dest, \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} src)
+\begin{DoxyCompactList}\small\item\em Copy a source list in the dest list. \end{DoxyCompactList}\item 
+\hyperlink{structt__client}{t\+\_\+client} $\ast$ \hyperlink{server__kassbriik_8h_acf8de08461e2e2061e78628d95a5a053}{get\+Client\+By\+Pid} (\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} a, int client\+Pid)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{server__kassbriik_8h_ab703f4f76628473adcf9246202352fe9}\label{server__kassbriik_8h_ab703f4f76628473adcf9246202352fe9}} 
+\index{server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}!t\+\_\+client@{t\+\_\+client}}
+\index{t\+\_\+client@{t\+\_\+client}!server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}}
+\subsubsection{\texorpdfstring{t\+\_\+client}{t\_client}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structclient}{client}  \hyperlink{structt__client}{t\+\_\+client}}
+
+\mbox{\Hypertarget{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}\label{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}} 
+\index{server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}!t\+\_\+clients\+\_\+list@{t\+\_\+clients\+\_\+list}}
+\index{t\+\_\+clients\+\_\+list@{t\+\_\+clients\+\_\+list}!server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}}
+\subsubsection{\texorpdfstring{t\+\_\+clients\+\_\+list}{t\_clients\_list}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structclients__list}{clients\+\_\+list}  \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{server__kassbriik_8h_ac42238b4d85d941aa8cbe94cebe6ef7a}\label{server__kassbriik_8h_ac42238b4d85d941aa8cbe94cebe6ef7a}} 
+\index{server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}!copy\+Clients\+List@{copy\+Clients\+List}}
+\index{copy\+Clients\+List@{copy\+Clients\+List}!server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}}
+\subsubsection{\texorpdfstring{copy\+Clients\+List()}{copyClientsList()}}
+{\footnotesize\ttfamily void copy\+Clients\+List (\begin{DoxyParamCaption}\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$}]{dest,  }\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}}]{src }\end{DoxyParamCaption})}
+
+
+
+Copy a source list in the dest list. 
+
+Copy the src list in the dest preventing from accessing to the dest list when modifying the src list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & The list in which the src will be copied. \\
+\hline
+{\em src} & The list that will be copied into the dest. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 40 of file server\+\_\+kassbriik.\+c.
+
+\mbox{\Hypertarget{server__kassbriik_8h_acf8de08461e2e2061e78628d95a5a053}\label{server__kassbriik_8h_acf8de08461e2e2061e78628d95a5a053}} 
+\index{server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}!get\+Client\+By\+Pid@{get\+Client\+By\+Pid}}
+\index{get\+Client\+By\+Pid@{get\+Client\+By\+Pid}!server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}}
+\subsubsection{\texorpdfstring{get\+Client\+By\+Pid()}{getClientByPid()}}
+{\footnotesize\ttfamily \hyperlink{structt__client}{t\+\_\+client}$\ast$ get\+Client\+By\+Pid (\begin{DoxyParamCaption}\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}}]{a,  }\item[{int}]{client\+Pid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file server\+\_\+kassbriik.\+c.
+
+\mbox{\Hypertarget{server__kassbriik_8h_a28775a21a7c6ce6d81b13835bc0b7f38}\label{server__kassbriik_8h_a28775a21a7c6ce6d81b13835bc0b7f38}} 
+\index{server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}!init\+Client\+List@{init\+Client\+List}}
+\index{init\+Client\+List@{init\+Client\+List}!server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}}
+\subsubsection{\texorpdfstring{init\+Client\+List()}{initClientList()}}
+{\footnotesize\ttfamily void init\+Client\+List (\begin{DoxyParamCaption}\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$}]{a,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Initialise the t\+\_\+clients\+\_\+list structure. 
+
+/file \hyperlink{server__kassbriik_8c}{server\+\_\+kassbriik.\+c} /author Corentin D\+E\+S\+T\+R\+EZ \& Valentin G\+U\+I\+B\+E\+R\+T\+E\+AU /date 09 Apr 2021 /brief Source code of the server\textquotesingle{}s library
+
+This library containts the definition of some useful values, functions and structures that are used by the server.
+
+Initialise the send structure depending on the send size. This function will set up the size of the list and initialise every value of the array to -\/1 as default value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The t\+\_\+clients\+\_\+list to initialise. \\
+\hline
+{\em size} & The size of the list. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 21 of file server\+\_\+kassbriik.\+c.
+
+\mbox{\Hypertarget{server__kassbriik_8h_a54f08f249535c5a9673652db9081dfe2}\label{server__kassbriik_8h_a54f08f249535c5a9673652db9081dfe2}} 
+\index{server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}!remove\+Client\+From\+List@{remove\+Client\+From\+List}}
+\index{remove\+Client\+From\+List@{remove\+Client\+From\+List}!server\+\_\+kassbriik.\+h@{server\+\_\+kassbriik.\+h}}
+\subsubsection{\texorpdfstring{remove\+Client\+From\+List()}{removeClientFromList()}}
+{\footnotesize\ttfamily void remove\+Client\+From\+List (\begin{DoxyParamCaption}\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$}]{a,  }\item[{int}]{client\+Pid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 29 of file server\+\_\+kassbriik.\+c.
+

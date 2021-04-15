@@ -1,0 +1,232 @@
+\hypertarget{server_8c}{}\section{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/server.c File Reference}
+\label{server_8c}\index{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/server.\+c@{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/server.\+c}}
+
+
+Source code of the client library.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}kassbriik.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}server\+\_\+kassbriik.\+h\char`\"{}}\newline
+Include dependency graph for server.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{server_8c_ac35a96447f088b28de93f9902ad7be97}{get\+Message\+Queue} (int $\ast$msg\+Id)
+\begin{DoxyCompactList}\small\item\em Create the message queue to communicate between the serveur and the client. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_a03d60fb910e6f6596cfbaf9d0d549c5e}{retrieve\+Clients\+Informations} (int msg\+Id, \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$clients, int nb\+Of\+Clients\+To\+Wait)
+\begin{DoxyCompactList}\small\item\em Await for clients\textquotesingle{} message to get their pid and the player\textquotesingle{}s username. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_a98cd9db04337a41311bff8d710bbc2fa}{confirm\+Connection\+To\+Client} (int msg\+Id, int client\+Pid, const char $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Send a message to a client via the message queue to confirm connection. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_a3117517939bbf27ad242fcd543d3250c}{notify\+Clients} (int msg\+Id, \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} clients, const char $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Send a message to multiple clients via the message queue. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_a99ae9684bd61dfacc6c3cdfd6c477f20}{waiting\+Clients\+Response} (int msg\+Id, \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} clients, int msg\+Type)
+\item 
+void \hyperlink{server_8c_a2e8cb63dd11a9af1049d001fe86d7f96}{waiting\+Players\+Score} (int msg\+Id, \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$clients)
+\begin{DoxyCompactList}\small\item\em Await the all clients in the list to send their score. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_ab28dcc1302fd208ab180785497949d2d}{create\+And\+Open\+Shm\+And\+Semaphore} (int $\ast$shm\+Id, struct shmid\+\_\+ds $\ast$shm\+Buffer, \hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$$\ast$shm\+Ptr, sem\+\_\+t $\ast$sem\+Id)
+\begin{DoxyCompactList}\small\item\em Create and open the shm and its semaphore. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_ac523a7ce31323a926b20ed893000c4a1}{write\+Players\+Score} (int msg\+Id, \hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} clients, int $\ast$shm\+Id, struct shmid\+\_\+ds $\ast$shm\+Buffer)
+\item 
+int \hyperlink{server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Source code of the client library. 
+
+\begin{DoxyAuthor}{Author}
+Corentin D\+E\+S\+T\+R\+EZ \& Valentin G\+U\+I\+B\+E\+R\+T\+E\+AU 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+09 Apr 2021 This file containts the functions defining the behavior of the server. It also define its behavior depending on the messages recieved. 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{server_8c_a98cd9db04337a41311bff8d710bbc2fa}\label{server_8c_a98cd9db04337a41311bff8d710bbc2fa}} 
+\index{server.\+c@{server.\+c}!confirm\+Connection\+To\+Client@{confirm\+Connection\+To\+Client}}
+\index{confirm\+Connection\+To\+Client@{confirm\+Connection\+To\+Client}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{confirm\+Connection\+To\+Client()}{confirmConnectionToClient()}}
+{\footnotesize\ttfamily void confirm\+Connection\+To\+Client (\begin{DoxyParamCaption}\item[{int}]{msg\+Id,  }\item[{int}]{type,  }\item[{const char $\ast$}]{msg }\end{DoxyParamCaption})}
+
+
+
+Send a message to a client via the message queue to confirm connection. 
+
+Send the message to a client which pid is send as argument. The message is composed of the message as string to send, the pid of the destination client and the pid of the server.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg\+Id} & Pointer where the file descriptor of the message queue that must be used. \\
+\hline
+{\em client\+Pid} & The pid of the destination client. \\
+\hline
+{\em buffer} & The string that will be send in the message. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 189 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_ab28dcc1302fd208ab180785497949d2d}\label{server_8c_ab28dcc1302fd208ab180785497949d2d}} 
+\index{server.\+c@{server.\+c}!create\+And\+Open\+Shm\+And\+Semaphore@{create\+And\+Open\+Shm\+And\+Semaphore}}
+\index{create\+And\+Open\+Shm\+And\+Semaphore@{create\+And\+Open\+Shm\+And\+Semaphore}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{create\+And\+Open\+Shm\+And\+Semaphore()}{createAndOpenShmAndSemaphore()}}
+{\footnotesize\ttfamily void create\+And\+Open\+Shm\+And\+Semaphore (\begin{DoxyParamCaption}\item[{int $\ast$}]{shm\+Id,  }\item[{struct shmid\+\_\+ds $\ast$}]{shm\+Buffer,  }\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$$\ast$}]{shm\+Ptr,  }\item[{sem\+\_\+t $\ast$}]{sem\+Id }\end{DoxyParamCaption})}
+
+
+
+Create and open the shm and its semaphore. 
+
+If the shm exists, delete it. In any case create the shm and open it. Then set the shm\+Buffer with the shm\textquotesingle{}s infos. If the semaphore already exists, close it. In any case create the semaphore and open it.
+
+
+\begin{DoxyParams}{Parameters}
+{\em shm\+Id} & The id of the shm. \\
+\hline
+{\em shm\+Buffer} & The buffer that must contains the shmid\+\_\+ds struct of the shm. \\
+\hline
+{\em shm\+Ptr} & The pointer to the shm used to read and write through it. \\
+\hline
+{\em sem\+Id} & The pointer to the semaphore. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 241 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_ac35a96447f088b28de93f9902ad7be97}\label{server_8c_ac35a96447f088b28de93f9902ad7be97}} 
+\index{server.\+c@{server.\+c}!get\+Message\+Queue@{get\+Message\+Queue}}
+\index{get\+Message\+Queue@{get\+Message\+Queue}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{get\+Message\+Queue()}{getMessageQueue()}}
+{\footnotesize\ttfamily void get\+Message\+Queue (\begin{DoxyParamCaption}\item[{int $\ast$}]{msg\+Id }\end{DoxyParamCaption})}
+
+
+
+Create the message queue to communicate between the serveur and the client. 
+
+Verify if the message queue isn\textquotesingle{}t already created. If it is, delete it. In any case, end by creating the message queue and store is id in msg\+Id.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg\+Id} & Pointer where the file descriptor of the message queue will be stored. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 183 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{server.\+c@{server.\+c}!main@{main}}
+\index{main@{main}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 134 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_a3117517939bbf27ad242fcd543d3250c}\label{server_8c_a3117517939bbf27ad242fcd543d3250c}} 
+\index{server.\+c@{server.\+c}!notify\+Clients@{notify\+Clients}}
+\index{notify\+Clients@{notify\+Clients}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{notify\+Clients()}{notifyClients()}}
+{\footnotesize\ttfamily void notify\+Clients (\begin{DoxyParamCaption}\item[{int}]{msg\+Id,  }\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}}]{clients,  }\item[{const char $\ast$}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Send a message to multiple clients via the message queue. 
+
+Send the message to a list of clients that is send as argument. The message is composed of the message as string to send and the pid of the server. Its type will be the pid of the client whose message is destinated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg\+Id} & Pointer where the file descriptor of the message queue that must be used. \\
+\hline
+{\em clients} & The list of the clients that will be notified. \\
+\hline
+{\em buffer} & The string that will be send in the message. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 198 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_a03d60fb910e6f6596cfbaf9d0d549c5e}\label{server_8c_a03d60fb910e6f6596cfbaf9d0d549c5e}} 
+\index{server.\+c@{server.\+c}!retrieve\+Clients\+Informations@{retrieve\+Clients\+Informations}}
+\index{retrieve\+Clients\+Informations@{retrieve\+Clients\+Informations}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{retrieve\+Clients\+Informations()}{retrieveClientsInformations()}}
+{\footnotesize\ttfamily void retrieve\+Clients\+Informations (\begin{DoxyParamCaption}\item[{int}]{msg\+Id,  }\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$}]{clients,  }\item[{int}]{nb\+Of\+Clients\+To\+Wait }\end{DoxyParamCaption})}
+
+
+
+Await for clients\textquotesingle{} message to get their pid and the player\textquotesingle{}s username. 
+
+Await for clients\textquotesingle{} message to get their pid and the player\textquotesingle{}s username and store it in the clients list send in parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg\+Id} & Pointer where the file descriptor of the message queue that must be used. \\
+\hline
+{\em clients} & The list of clients where the client\textquotesingle{}s informations will be stored. \\
+\hline
+{\em nb\+Of\+Clients\+To\+Wait} & The number of clients that the server will get informations. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 168 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_a99ae9684bd61dfacc6c3cdfd6c477f20}\label{server_8c_a99ae9684bd61dfacc6c3cdfd6c477f20}} 
+\index{server.\+c@{server.\+c}!waiting\+Clients\+Response@{waiting\+Clients\+Response}}
+\index{waiting\+Clients\+Response@{waiting\+Clients\+Response}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{waiting\+Clients\+Response()}{waitingClientsResponse()}}
+{\footnotesize\ttfamily void waiting\+Clients\+Response (\begin{DoxyParamCaption}\item[{int}]{msg\+Id,  }\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}}]{clients,  }\item[{int}]{msg\+Type }\end{DoxyParamCaption})}
+
+
+
+Definition at line 210 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_a2e8cb63dd11a9af1049d001fe86d7f96}\label{server_8c_a2e8cb63dd11a9af1049d001fe86d7f96}} 
+\index{server.\+c@{server.\+c}!waiting\+Players\+Score@{waiting\+Players\+Score}}
+\index{waiting\+Players\+Score@{waiting\+Players\+Score}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{waiting\+Players\+Score()}{waitingPlayersScore()}}
+{\footnotesize\ttfamily void waiting\+Players\+Score (\begin{DoxyParamCaption}\item[{int}]{msg\+Id,  }\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list} $\ast$}]{clients }\end{DoxyParamCaption})}
+
+
+
+Await the all clients in the list to send their score. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg\+Id} & Pointer where the file descriptor of the message queue that must be used. \\
+\hline
+{\em clients} & The list of the clients that must send their score. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 222 of file server.\+c.
+
+\mbox{\Hypertarget{server_8c_ac523a7ce31323a926b20ed893000c4a1}\label{server_8c_ac523a7ce31323a926b20ed893000c4a1}} 
+\index{server.\+c@{server.\+c}!write\+Players\+Score@{write\+Players\+Score}}
+\index{write\+Players\+Score@{write\+Players\+Score}!server.\+c@{server.\+c}}
+\subsubsection{\texorpdfstring{write\+Players\+Score()}{writePlayersScore()}}
+{\footnotesize\ttfamily void write\+Players\+Score (\begin{DoxyParamCaption}\item[{int}]{msg\+Id,  }\item[{\hyperlink{server__kassbriik_8h_a0a2d0fa87306441ee5e7772d478fb8e4}{t\+\_\+clients\+\_\+list}}]{clients,  }\item[{int $\ast$}]{shm\+Id,  }\item[{struct shmid\+\_\+ds $\ast$}]{shm\+Buffer }\end{DoxyParamCaption})}
+
+
+
+Definition at line 258 of file server.\+c.
+

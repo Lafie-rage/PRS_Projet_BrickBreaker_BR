@@ -1,0 +1,88 @@
+\hypertarget{kassbriik_8c}{}\section{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/kassbriik.c File Reference}
+\label{kassbriik_8c}\index{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/kassbriik.\+c@{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/kassbriik.\+c}}
+
+
+code for the game itself.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}kassbriik.\+h\char`\"{}}\newline
+Include dependency graph for kassbriik.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{kassbriik_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{kassbriik_8c_ae830f425ca982cfa3e5361fca4cbe6f0}{sort\+Score\+List} (\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$scores)
+\begin{DoxyCompactList}\small\item\em Sort the list if scores. \end{DoxyCompactList}\item 
+void \hyperlink{kassbriik_8c_a38c0549e2a30edd606ea23cccd0ebde1}{copy\+Score\+List} (\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$dest, \hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} src)
+\begin{DoxyCompactList}\small\item\em Copy a source list in the dest list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+code for the game itself. 
+
+\begin{DoxyAuthor}{Author}
+Auteur Corentin Destrez, Valentin Guiberteau 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+4 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+16 april 2021
+\end{DoxyDate}
+This file groups all the functions applying to the game itself such as the input drawing functions. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{kassbriik_8c_a38c0549e2a30edd606ea23cccd0ebde1}\label{kassbriik_8c_a38c0549e2a30edd606ea23cccd0ebde1}} 
+\index{kassbriik.\+c@{kassbriik.\+c}!copy\+Score\+List@{copy\+Score\+List}}
+\index{copy\+Score\+List@{copy\+Score\+List}!kassbriik.\+c@{kassbriik.\+c}}
+\subsubsection{\texorpdfstring{copy\+Score\+List()}{copyScoreList()}}
+{\footnotesize\ttfamily void copy\+Score\+List (\begin{DoxyParamCaption}\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$}]{dest,  }\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list}}]{dest }\end{DoxyParamCaption})}
+
+
+
+Copy a source list in the dest list. 
+
+Copy the src list in the dest list preventing from accessing to the dest list when modifying the src list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & The destiantion list. \\
+\hline
+{\em src} & The source list. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 36 of file kassbriik.\+c.
+
+\mbox{\Hypertarget{kassbriik_8c_ae830f425ca982cfa3e5361fca4cbe6f0}\label{kassbriik_8c_ae830f425ca982cfa3e5361fca4cbe6f0}} 
+\index{kassbriik.\+c@{kassbriik.\+c}!sort\+Score\+List@{sort\+Score\+List}}
+\index{sort\+Score\+List@{sort\+Score\+List}!kassbriik.\+c@{kassbriik.\+c}}
+\subsubsection{\texorpdfstring{sort\+Score\+List()}{sortScoreList()}}
+{\footnotesize\ttfamily void sort\+Score\+List (\begin{DoxyParamCaption}\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$}]{scores }\end{DoxyParamCaption})}
+
+
+
+Sort the list if scores. 
+
+/file \hyperlink{kassbriik_8c}{kassbriik.\+c} /author Corentin D\+E\+S\+T\+R\+EZ \& Valentin G\+U\+I\+B\+E\+R\+T\+E\+AU /date 12 Apr 2021 /brief Source code of the client\textquotesingle{}s library
+
+This library containts the definition of some useful values, functions and structures that are used by the server.
+
+Sort the score list from lower score to the greater.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scores} & The list of scores that must be sorted. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 19 of file kassbriik.\+c.
+

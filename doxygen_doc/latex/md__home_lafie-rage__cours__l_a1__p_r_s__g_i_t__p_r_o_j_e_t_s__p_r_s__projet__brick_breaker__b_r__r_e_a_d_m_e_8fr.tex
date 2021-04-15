@@ -1,0 +1,364 @@
+
+
+\subsection*{Introduction}
+
+Ce repository contient l\textquotesingle{}un de nos projet de 3ème année en école d\textquotesingle{}ingénieur informatique et industriel.
+
+Le but était de créer un jeu multijoueur et le rendre aussi simple que possible afin que n\textquotesingle{}importe qui puisse le télécharger et y jouer sans soucis ou même continuer de le développer.
+
+{\bfseries Attention} \+: ce jeu ne fonctionnera {\bfseries uniquement sous système d\textquotesingle{}exploitation vasé sur Linux} pour l\textquotesingle{}instant. Il ne fonctionnera pas sous Windows et n\textquotesingle{}a pas été testé sous Mac OS. Si vous souhaitez nous aider à le rendre cross-\/plateforme, n\textquotesingle{}hésitez pas. \+:)
+
+\subsection*{Prérequis}
+
+Il n\textquotesingle{}y a pas beaucoup de prerequis pour suivre ses instructions hormis savoir ouvrir une console linux (ctrl+alt+t sous Ubuntu) et savoir lire les info des commandes données. Pour ce dernier, voici quelques rappels \+:
+\begin{DoxyItemize}
+\item $\ast$$\ast$\#$\ast$$\ast$ \+: signifie que la commande doit être exécuté entant que root.
+\item {\bfseries \$} \+: signifie que la commande peut être exécuté en utilisateur normal.
+\item {\bfseries user\+:/path/to/folder \$} \+: signifie que vous êtes l\textquotesingle{}utilsateur {\bfseries user} et que vous vous trouver dans le dossier dont le chemin est \+\_\+\+\_\+/path/to/folder\+\_\+\+\_\+. En général, ce n\textquotesingle{}est pas précisé, si ça l\textquotesingle{}est, c\textquotesingle{}est que c\textquotesingle{}est important d\textquotesingle{}être cet utilisateur dans ce répertoire. Lorsque le répertoire n\textquotesingle{}est pas donné c\textquotesingle{}est que vous devez être dans le dossier du jeu.
+\item $\ast$$\ast$$\sim$$\ast$$\ast$ \+: signifie le répertoire \char`\"{}home\char`\"{} de l\textquotesingle{}utilsateur. En général /home/$<$user$>$ avec \+\_\+\+\_\+$<$user$>$\+\_\+\+\_\+ le nom de l\textquotesingle{}utilsateur.
+\end{DoxyItemize}
+
+\subsection*{Récupérer le projet}
+
+\subsubsection*{Récupérer les sources pour jouer simplement}
+
+Si vous ne souhaitez pas faire plus qu\textquotesingle{}y jouer, placer vous sur la branche \char`\"{}master\char`\"{}. Vous pouvez vérifier que vous êtes sur la bonne branche de cette manière \+:  Vous pouvez ensuite simplement télécharger l\textquotesingle{}archive zip du des sources en cliquant sur \char`\"{}$\ast$$\ast$\+Code$\ast$$\ast$\char`\"{} puis sur \char`\"{}$\ast$$\ast$\+Download Z\+I\+P$\ast$$\ast$\char`\"{}. Ensuite vous n\textquotesingle{}aurez plus qu\textquotesingle{}à extraire les fichier de l\textquotesingle{}archive. Pour faire ceci sous Linux, vous pouvez ouvrir l\textquotesingle{}archive en double cliquant dessus. Ceci vous permettra d\textquotesingle{}ouvrir le gestionaire d\textquotesingle{}archive. Il ne vous restera plus qu\textquotesingle{}à cliquer sur extraire (en haut à gauche) et choisir où vous voulez placer le dossier extrait.
+
+Pour simplement jouer, passer directement à la partie \char`\"{}\+\_\+\+\_\+\+Compiler et lancer le jeu\+\_\+\+\_\+\char`\"{}
+
+\subsubsection*{Récupérer les sources pour jouer ou aider au développement}
+
+Si vous voulez également prendre par au développement du jeu, il vous faudra d\textquotesingle{}abord avoir git d\textquotesingle{}installer sur votre pc ! \+:) Pour ceci, vous pouvez utiliser la commande suivante \+: 
+\begin{DoxyCode}
+$ sudo apt-cache search git | grep -E "^git"
+\end{DoxyCode}
+ Si vous n\textquotesingle{}avez aucun retour avec cette commande, c\textquotesingle{}est qu\textquotesingle{}il n\textquotesingle{}est pas installer. Pour l\textquotesingle{}installer aller visiter \href{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}{\tt ce site}, il vous expliquera comment faire qu\textquotesingle{}importe votre plateforme.
+
+Déplacer vous ensuite dans le dossier dans lequel vous souhaitez placer le projet (en console ou en graphique). Puis ouvrez une console à cet endroit si ce n\textquotesingle{}est pas déjà le cas et tapez \+: 
+\begin{DoxyCode}
+$ git init
+$ git remote add origin https://github.com/Lafie-rage/PRS-LA1
+$ git pull origin master
+\end{DoxyCode}
+
+
+Vous avez maintenant la branche {\bfseries master} du projet. Vous pouvez également télécharger d\textquotesingle{}autres branches comme ceci en remplacant \+\_\+\+\_\+$<$nom\+De\+La\+Branche$>$\+\_\+\+\_\+ par la branche que vous souhaitez récupérer \+:
+
+
+\begin{DoxyCode}
+$ git fectch origin
+$ git checkout <nomDeLaBranche>
+\end{DoxyCode}
+
+
+Si vous souhaitez nous aidez dans le développement et que vous ne connaissez pas Git, je vous conseilles d\textquotesingle{}aller voir quelques cours d\textquotesingle{}explications comme \href{https://openclassrooms.com/fr/courses/5641721-utilisez-git-et-github-pour-vos-projets-de-developpement}{\tt celui-\/ci}.
+
+\subsection*{Compiler et lancer le jeu}
+
+\subsubsection*{Jouer seul}
+
+Afin de jouer seul il vous faudra simplement lancer un client et le serveur. Pour ceci, vous devrez d\textquotesingle{}abord compiler chacun des executables. Pour ceci, ouvrez une console dans le répertoire du jeu et tapez-\/ceci \+: 
+\begin{DoxyCode}
+$ make
+\end{DoxyCode}
+ Puis ensuite, vous pourrez lancer le jeu en laçant le serveur puis le jeu en tapant ceci toujours dans la même console (remplacer \+\_\+\+\_\+$<$votre\+Pseudo$>$\+\_\+\+\_\+ par le pseudo que vous voulez avoir dans la partie \+: 
+\begin{DoxyCode}
+$ ./build/server 1
+$ client <votrePseudo>
+\end{DoxyCode}
+
+
+\subsubsection*{Jouer à plusieurs sur des machines différentes}
+
+Afin de jouer à plusieurs, vous devrez nécessairement passer par plusieurs machines. En effet, il n\textquotesingle{}a pas été rendu possible d\textquotesingle{}utiliser le même clavier pour jouer à plusieurs sur une machine. Comme pour jouer seul, voici les commandes à exécuter dans le répertoire du jeu \+: 
+\begin{DoxyCode}
+# ./creating\_players\_accounts.sh
+$ make
+\end{DoxyCode}
+ La première commande doit être lancé entant que root. Elle permet de créer le compte joueur appelé \char`\"{}player\char`\"{}. Cette utilisateur est restreint. Pour plus de détails sur les utilisateurs restraint, tapez la commande suivante \+: 
+\begin{DoxyCode}
+$ man rbash
+\end{DoxyCode}
+
+
+Le compte \char`\"{}player\char`\"{} a comme mot de passe \char`\"{}player\char`\"{}.
+
+\paragraph*{Mise en place du serveur S\+SH}
+
+\subparagraph*{Installation du serveur S\+SH}
+
+Si vous n\textquotesingle{}avez jamais installer de serveur S\+SH, voici la marche à suivre. Si vous êtes sous Ubuntu/\+Debian ça se passe \href{https://doc.ubuntu-fr.org/ssh#installation_du_serveur_ssh}{\tt ici}. Pour les autres distributions Linux, je vous invite à vous renseigner sur le net. \+:)
+
+\subparagraph*{Configuration du serveur S\+SH}
+
+Pour la configuration du serveur S\+SH, je vous conseil dans un premier temps de sauvegarder la configuration actuel de votre serveur si jamais vous vouliez la réutiliser. Pour ceci \+: 
+\begin{DoxyCode}
+# ./set\_up\_config\_server\_ssh.sh
+# service sshd restart
+$ cd /home/player
+$ su player
+player:~ $ ssh-keygen -t rsa
+\end{DoxyCode}
+
+
+\paragraph*{Lancer la partie}
+
+Pour lancer la partie à plusieurs, le fonctionnement est similaire à celui pour les parties seul a l\textquotesingle{}exception de la connexion par S\+SH.
+
+\subparagraph*{Connaitre l\textquotesingle{}IP du serveur}
+
+Avant de vous connecter par ssh sur le serveur, il vous faudra connaître son IP. Pour que tout fonctionne, il vous faudra être sur le même réseau (par exemple, sur la même box internet). Pour connaître l\textquotesingle{}ip du serveur, utiliser la commande suivante sur votre pc serveur en remplacement {\bfseries \mbox{[}interface\mbox{]}} par l\textquotesingle{}interface réseau utilisé si vous la connaissez \+: 
+\begin{DoxyCode}
+$ ifconfig [interface]
+\end{DoxyCode}
+ En général, votre ip sera du type 192.\+168.\+x.\+x (avec x un nombre entre 0 et 255). Sous Ubuntu, vous pouvez aussi utiliser \+: 
+\begin{DoxyCode}
+$ hostname -I
+\end{DoxyCode}
+ Cette commande vous donnera directement l\textquotesingle{}ensemble de vos adresses IP.
+
+Si vous avez plusieurs adresses, vous pouvez effectuer la même commande sur un pc client se trouvant sur le même réseau. Son seul le chiffre après le dernier \textquotesingle{}.\textquotesingle{} devrait avoir changé. Par exemple\+: IP serveur \+: 192.\+168.\+1.\+1 IP client \+: 192.\+168.\+1.\+2
+
+Si vous n\textquotesingle{}êtes toujours pas sûr, depuis un client essayer de ping les IP du serveur jusqu\textquotesingle{}à ce qu\textquotesingle{}un des ping vous donne une réponse. Vous pouvez faire ceci de cette manière (en remplace \+\_\+\+\_\+$<$ip\+Server$>$\+\_\+\+\_\+ par une des IP du serveur)\+: 
+\begin{DoxyCode}
+$ ping <ipServer>
+\end{DoxyCode}
+
+
+\subparagraph*{Vérifier la présence du client S\+SH}
+
+Lorsque vous connaissez l\textquotesingle{}IP du serveur, vous pouvez vous connecter via le client S\+SH. Normalement, sous Linux, vous pourrez exécuter la commande ssh. Pour vérifier ceci, exécutez la commande \+: 
+\begin{DoxyCode}
+$ ssh
+\end{DoxyCode}
+ Vous devriez obtenir un message vous décrivant le format de la commande ssh.
+
+\subparagraph*{Installer le client S\+SH}
+
+\subparagraph*{Sous Linux}
+
+Si vous n\textquotesingle{}avez pas le client S\+SH, installer le par exemple à l\textquotesingle{}aide de 
+\begin{DoxyCode}
+# apt install ssh
+\end{DoxyCode}
+ \subparagraph*{sous Windows}
+
+Si vous êtes sur windows, il vous faudra installer putty. Ne maitrisant pas entièrement le sujet, nous vous invitons à vous rendre sur \+:
+\begin{DoxyItemize}
+\item \href{https://the.earth.li/~sgtatham/putty/latest/w32/putty-0.74-installer.msi}{\tt ce lien pour les Windows 32 bits}
+\item \href{https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.74-installer.msi}{\tt ce lien pour les Windows 64 bits} Et pour la connexion, renseignez vous sur internet.
+\end{DoxyItemize}
+
+\subparagraph*{Sous Mac OS}
+
+N\textquotesingle{}utilisant pas Mac OS, nous vous invitons à vous rendre sur des forums parlant de se sujet. Vous avez probablement le client S\+SH par défaut.
+
+\subparagraph*{Connexion au serveur via S\+SH sous Linux}
+
+Utilisez la commande suivant en rempalce \+\_\+\+\_\+$<$ip\+Serveur$>$\+\_\+\+\_\+ par l\textquotesingle{}ip du serveur \+: 
+\begin{DoxyCode}
+$ ssh player@<ipServeur>
+\end{DoxyCode}
+ Vous devriez avoir un message vous demandant d\textquotesingle{}enregistrer la clé R\+SA, vous pouvez répondre {\bfseries yes} à ce message. Ensuite entrez le mot de passe {\bfseries player} lorsqu\textquotesingle{}il vous est demandé.
+
+\subparagraph*{Lancer le serveur}
+
+Avant de lancer les clients, il faudra que le serveur soit lancé. Sur le serveur exécuté la commande suivante en remplace \+\_\+\+\_\+$<$nombre\+De\+Joueur$>$\+\_\+\+\_\+ par le nombre de joueur dans la partie \+: 
+\begin{DoxyCode}
+$ ./build/server <nombreDeJoueur>
+\end{DoxyCode}
+
+
+\subparagraph*{Lancer un client}
+
+Pour lancer le client, depuis la connexion S\+SH en remplaçant \+\_\+\+\_\+$<$pseudo$>$\+\_\+\+\_\+ par votre pseudo dans la partie \+: 
+\begin{DoxyCode}
+player@<ipServeur>: ~$ client <pseudo>
+\end{DoxyCode}
+
+
+Pour le faire depuis le serveur (sur une console différente que celle du serveur), de la même manière \+: 
+\begin{DoxyCode}
+$ client <pseudo>
+\end{DoxyCode}
+ ou 
+\begin{DoxyCode}
+$ ./build/client <pseudo>
+\end{DoxyCode}
+
+
+\subsection*{Règles du jeu}
+
+Le but du jeu est de {\bfseries casser le mur de brique} (représentée par des {\itshape B}) à l\textquotesingle{}aide de la balle (représentée par {\itshape o}).
+
+Pour ceci, vous devrez {\bfseries faire rebondir la balle} sur la raquette (représentée par une ligne de $\ast$$\sim$$\ast$), les murs ou les briques à détruire.
+
+Chaque fois que la balle touchera un obstacle, elle rebondira selon un angle à {\bfseries 45 degrés} dont la direction sera changé comme ceci\+:
+\begin{DoxyItemize}
+\item Depuis le haut gauche \+:
+\end{DoxyItemize}
+
+
+
+
+\begin{DoxyItemize}
+\item Depuis le haut droite \+:
+\end{DoxyItemize}
+
+
+
+
+\begin{DoxyItemize}
+\item Depuis le bas gauche \+:
+\end{DoxyItemize}
+
+
+
+
+\begin{DoxyItemize}
+\item Depuis le bas droite \+:
+\end{DoxyItemize}
+
+
+
+Chaque brique cassée raporte {\bfseries 1 points}. Dans une partie normale il y a {\bfseries 152 briques}.
+
+Chaque fois que la balle touche la partie sous la raquette, vous perdez {\bfseries une vie}. Vous disposez de {\bfseries 3 vies}. Chaque vie perdue {\bfseries divise vos points par deux en tronquant le résultat}.
+
+\subsection*{Contrôle du jeu}
+
+
+\begin{DoxyItemize}
+\item $\ast$\textquotesingle{}q\textquotesingle{}$\ast$ déplace la raquette à gauche.
+\item $\ast$\textquotesingle{}d\textquotesingle{}$\ast$ déplace la raquette à droite.
+\item $\ast$\textquotesingle{}p\textquotesingle{}$\ast$ interrompt ou reprend la partie.
+\item $\ast$\textquotesingle{}o\textquotesingle{}$\ast$ accélère la partie. L\textquotesingle{}accélération n\textquotesingle{}est utile que lors que l\textquotesingle{}on active la raquette infinie afin de tester les maps. En effet, puisque nous ne faisont que des angles à 45° la plus part des configurations de map ne sont pas finissables.
+\item $\ast$\textquotesingle{}i\textquotesingle{}$\ast$ active la raquette infinie. Comme dit précédemment, cette option est utilisé pour tester les patternes de maps.
+\item $\ast$\textquotesingle{}c\textquotesingle{}$\ast$ arrête/abandonne la partie.
+\end{DoxyItemize}
+
+\subsection*{Information sur le développement}
+
+Le développement a été fait par \href{https://github.com/Lafie-rage}{\tt Corentin Destrez} et \href{https://github.com/ValentinIG2I}{\tt Valentin Guiberteau} dans le cadre du projet de P\+RS de L\+A1 en 2020/2021.
+
+Cette partie détaillera les choix d\textquotesingle{}implémentation, le protocole de communication Client/\+Serveur.
+
+\subsubsection*{La grille du jeu}
+
+En raison de l\textquotesingle{}utilisation de configuration de la tty en raw et sans écho (les raisons seront expliquée par la suite), nous avons des affichages parfois chaotique, le jeu est donc réglé pour être joué dans une console à taille par défaut sous Ubuntu (80x24).
+
+La grille de jeu est un tableau 2D de char faisant 80x20 et de deux lignes d\textquotesingle{}affichages d\textquotesingle{}informations sur la partie. Le tableau est composé de différents char\+:
+\begin{DoxyItemize}
+\item $\ast$\textquotesingle{} \textquotesingle{}$\ast$ pour les casses vides
+\item $\ast$\textquotesingle{}W\textquotesingle{}$\ast$ pour les murs
+\item $\ast$\textquotesingle{}B\textquotesingle{}$\ast$ pour les briques
+\item $\ast$\textquotesingle{}$\sim$\textquotesingle{}$\ast$ pour la raquette
+\item $\ast$\textquotesingle{}o\textquotesingle{}$\ast$ pour la balle
+\item $\ast$\textquotesingle{}R\textquotesingle{}$\ast$ pour les erreurs de caractères
+\item $\ast$\textquotesingle{}E\textquotesingle{}$\ast$ lors du replacement de la balle après une mort
+\end{DoxyItemize}
+
+Chacun de ses caractères est affiché identiquement à l\textquotesingle{}écran à l\textquotesingle{}exception de $\ast$\textquotesingle{}E\textquotesingle{}$\ast$ qui est remplacé par $\ast$\textquotesingle{} \textquotesingle{}$\ast$ à l\textquotesingle{}écran puisque ce caractère sert à replacée la balle sur la raquette.
+
+L\textquotesingle{}intégralité des informations se trouvent dans des structures (\hyperlink{structball__t}{ball\+\_\+t}, \hyperlink{structbrick__t}{brick\+\_\+t}, ...). Plus de détailles se trouvent dans la documentation créée à l\textquotesingle{}aide de doxygen.
+
+\subsubsection*{Affichage et récupération des saisis clavier}
+
+La partie graphique du jeu repose sur un rafraichissement constant de l\textquotesingle{}affichage de la grille à l\textquotesingle{}écran sur un premier thread et un second thread qui attend la saisi d\textquotesingle{}un caractère par l\textquotesingle{}utilisateur pour réagir.
+
+Il y a plusieurs possibilités de réactions en fonction de la touche saisie\+:
+\begin{DoxyItemize}
+\item $\ast$\textquotesingle{}q\textquotesingle{}$\ast$ déplace la raquette à gauche.
+\item $\ast$\textquotesingle{}d\textquotesingle{}$\ast$ déplace la raquette à droite.
+\item $\ast$\textquotesingle{}p\textquotesingle{}$\ast$ interrompt ou reprend la partie.
+\item $\ast$\textquotesingle{}o\textquotesingle{}$\ast$ accélère la partie. L\textquotesingle{}accélération n\textquotesingle{}est utile que lors que l\textquotesingle{}on active la raquette infinie afin de tester les maps. En effet, puisque nous ne faisont que des angles à 45° la plus part des configurations de map ne sont pas finissables.
+\item $\ast$\textquotesingle{}i\textquotesingle{}$\ast$ active la raquette infinie. Comme dit précédemment, cette option est utilisé pour tester les patternes de maps.
+\item $\ast$\textquotesingle{}c\textquotesingle{}$\ast$ arrête/abandonne la partie.
+\end{DoxyItemize}
+
+\subsubsection*{Communication entre le serveur et le client}
+
+\paragraph*{Choix du protocole de communication}
+
+Notre choix a été de prendre un protocole type T\+CP. C\textquotesingle{}est à dire qu\textquotesingle{}à chaque requête envoyé par le serveur (resp. le client), le client (resp. le serveur) envoit une réponse pour confirmer sa réception et son traitement.
+
+\subsubsection*{Diagramme de séquence}
+
+En bleu, ce sont les communications par boîte aux lettres. En rouge ce sont les communications par la mémoire partagée.
+
+
+
+La connexion par S\+SH n\textquotesingle{}est pas obligatoire puisqu\textquotesingle{}on peut également jouer depuis le PC serveur.
+
+La séquence de communication type est donc la suivante \+:
+\begin{DoxyEnumerate}
+\item A son lancement, le serveur attent les messages des clients sur la boîte aux lettres. Il sait combien de clients doivent se connecter puisque cette information lui est envoyé en paramètre.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item A son lancement, le client envoit un message comportant le nom du joueur et son P\+ID. C\textquotesingle{}est données sont stockée dans une structure contenant la liste des clients avec leur P\+ID, le nom du joueur et une place pour son futur score.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Lorsque tous les clients attendus se sont connectés au serveur, ce dernier envoit un message à chaque client pour lui dire de lancer la partie.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Le client envoit un message pour confirmer que la partie s\textquotesingle{}est lancée puis lance la partie.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Lorsque la partie d\textquotesingle{}un client est terminé, un message est envoyé via la boîte aux lettres au serveur. Ce message contient le score des joueurs.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Le serveur attent la réception de chaque score et les stock dans la liste des clients.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Le serveur écrit le score dans la mémoire partagée.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Le serveur envoit un message à chaque client via la boite aux lettres pour leur dire que les scores sont écrit.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Les clients lisent les scores 1 à 1. Les accès concurents sont gérés par un sémpahore.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Le client répond au serveur lorsqu\textquotesingle{}il a lu le score puis l\textquotesingle{}affiche à l\textquotesingle{}écran.
+\end{DoxyEnumerate}
+
+\subsubsection*{Structure des fichiers sources}
+
+Le code est répartit entre différents fichiers. Il y a une librairie global au client et au serveur \+: \hyperlink{kassbriik_8h}{kassbriik.\+h}/.c. Les executables et les libraires qu\textquotesingle{}ils utilisent sont \+:
+\begin{DoxyItemize}
+\item client \+: \hyperlink{game__ui_8h}{game\+\_\+ui.\+h}/.c.
+\item server \+: \hyperlink{server__kassbriik_8h}{server\+\_\+kassbriik.\+h}/.c.
+\end{DoxyItemize}
+
+Des scripts bash servant à la configuration sont également disponibles \+:
+\begin{DoxyItemize}
+\item creating\+\_\+players\+\_\+accounts.\+sh \+: Création et configuration du compte \char`\"{}player\char`\"{} qui est restreint (utilisation du rbash).
+\item move\+\_\+client.\+sh \+: Déplace l\textquotesingle{}executable dans le dossier /bin/ afin d\textquotesingle{}être appelé comme une commande. Il ajoute le r au mode du fichier afin que le bit S\+U\+ID soit utilisable depuis le rbash. Ce fichier est executé par défaut à la compilation du client à l\textquotesingle{}aide du makefile.
+\item set\+\_\+up\+\_\+config\+\_\+server\+\_\+ssh.\+sh \+: Remplace le fichier de configuration de sshd par la configuration du jeu. Stock l\textquotesingle{}ancienne configuration(si elle existe) dans le dossier \char`\"{}\+O\+L\+D\+\_\+\+S\+S\+H\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+O\+N\+F\+I\+G\char`\"{} à la racine du projet. Ce dossier disposera de différents dossiers \char`\"{}version\+X\char`\"{}.
+\end{DoxyItemize}
+
+Le dossier offre aussi un fichier makefile permettant la compilation du projet par différents cibles. L\textquotesingle{}ensemble des executable compilée se trouvent dans le dossier build qui est créé lors de l\textquotesingle{}appel de n\textquotesingle{}importe quel cible hormis clean.
+
+Détails des cibles
+\begin{DoxyItemize}
+\item all \+: Compile le serveur et le client puis lance le script move\+\_\+client.\+sh
+\item client et build/client \+: Compilent le client seulement puis lance le script move\+\_\+client.\+sh
+\item server et build/server \+: Compilent le serveur seulement
+\item build/server\+\_\+kassbriik.\+a \+: Compile et créé la librairie du serveur seulement
+\item build/server\+\_\+kassbriik.\+o \+: Compile la librairis du serveur seulement
+\item build/game\+\_\+ui.\+a \+: Compile et créé la librairie de l\textquotesingle{}interface graphique du jeu seulement.
+\item build/game\+\_\+ui.\+o \+: Compile la librairie de l\textquotesingle{}interface graphique du jeu seulement.
+\item build/kassbriik.\+a \+: Compile et créé la librairie commune au serveur et au client.
+\item build/kassbriik.\+o \+: Compile la librairie commune au serveur et au client.
+\item build \+: Créé le dossier build
+\item move\+\_\+client \+: Lance le script move\+\_\+client.\+sh
+\item clean \+: vide le dossier build
+\end{DoxyItemize}
+
+\subsection*{Developer}
+
+\href{https://github.com/Lafie-rage}{\tt Corentin Destrez}
+
+\href{https://github.com/ValentinIG2I}{\tt Valentin Guiberteau}
+
+ 

@@ -1,0 +1,373 @@
+\hypertarget{kassbriik_8h}{}\section{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/kassbriik.h File Reference}
+\label{kassbriik_8h}\index{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/kassbriik.\+h@{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/kassbriik.\+h}}
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$semaphore.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ipc.\+h$>$}\newline
+{\ttfamily \#include $<$sys/shm.\+h$>$}\newline
+{\ttfamily \#include $<$sys/msg.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+Include dependency graph for kassbriik.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{kassbriik_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{kassbriik_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structscore}{score}
+\item 
+struct \hyperlink{structscores__list}{scores\+\_\+list}
+\item 
+struct \hyperlink{structbody}{body}
+\item 
+struct \hyperlink{structrequest}{request}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{kassbriik_8h_ad3fe337408f16c132c895f2b59326410}{C\+H\+E\+CK}(sts,  msg)~if ((sts) == -\/1) \{ perror(msg); exit(-\/1);\}
+\begin{DoxyCompactList}\small\item\em Check the return status of a function. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a0a8f91f93d75a07f0ae45077db45b3eb}{M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS}~9
+\begin{DoxyCompactList}\small\item\em Number max of clients that the server can accept. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a53ad8675df847e45a63bcb40ff793745}{S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME}~\char`\"{}kassbriik\+\_\+shm\+\_\+sem\char`\"{}
+\item 
+\#define \hyperlink{kassbriik_8h_a31d581c814a72a1c69bd228b078d6b69}{S\+H\+M\+\_\+\+K\+EY}~ftok(\char`\"{}/home/player/shm\+\_\+kassbriik\char`\"{}, 1)
+\begin{DoxyCompactList}\small\item\em Key to acces to the shm. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a1a92f29d280d7de1b5bc07f16dc933bf}{M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE}~256
+\begin{DoxyCompactList}\small\item\em Size maximal of a message to send or read from the message queue. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a9fd0f43f293031d18a7b06276db6d664}{M\+S\+G\+\_\+\+M\+O\+DE}~0666
+\begin{DoxyCompactList}\small\item\em Opening mode of the message queue. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_acebb45f6d9740063956da4fc574b2b04}{M\+S\+G\+\_\+\+K\+EY}~ftok(\char`\"{}/home/player/msg\+\_\+kassbriik\char`\"{}, 1)
+\begin{DoxyCompactList}\small\item\em Key ot acces to the message queue. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a0118c63c161e4da398fa9d4e0f11879c}{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}~1
+\begin{DoxyCompactList}\small\item\em Message type for client connection. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a0e71ded84aa1312e91ea06eed7e5c654}{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG}~\char`\"{}You are connected\char`\"{}
+\begin{DoxyCompactList}\small\item\em Response of the server when the client is connected. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a5aace718615ca24772083216b8322d95}{S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG}~\char`\"{}Game must start\char`\"{}
+\begin{DoxyCompactList}\small\item\em Message to start the game. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_aaeece299664ddd15098e689c50d6a5a7}{G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}~2
+\begin{DoxyCompactList}\small\item\em Message type to notify that the game is started. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a4143446cc4b5108a3ab124ac3c5b2e2e}{E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}~3
+\begin{DoxyCompactList}\small\item\em Message type to notify end of the game. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a66695a5fa7a9e8bd3257dbdafe0b256e}{S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}~4
+\begin{DoxyCompactList}\small\item\em Message type to notify that score is received. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_ab20bc32ef9a15349cc85db5174d18364}{S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG}~\char`\"{}Scores can be read\char`\"{}
+\begin{DoxyCompactList}\small\item\em Message send to notify that scores can be read. \end{DoxyCompactList}\item 
+\#define \hyperlink{kassbriik_8h_a76c877269a8e697e34ca79d0a26665f5}{S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}~5
+\begin{DoxyCompactList}\small\item\em Message type to notify that scores has been read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structscore}{score} \hyperlink{kassbriik_8h_aceeef36f61cc8b9309737f48b70323db}{t\+\_\+score}
+\item 
+typedef struct \hyperlink{structscores__list}{scores\+\_\+list} \hyperlink{kassbriik_8h_a3922a6d636a23086466165dc8227070c}{t\+\_\+scores\+\_\+list}
+\item 
+typedef struct \hyperlink{structbody}{body} \hyperlink{kassbriik_8h_a8256930a164ca52f5a7532acc9a2725d}{t\+\_\+body}
+\item 
+typedef struct \hyperlink{structrequest}{request} \hyperlink{kassbriik_8h_a033810dbd32f066a84c8af1fa6b1cae7}{t\+\_\+request}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{kassbriik_8h_ae830f425ca982cfa3e5361fca4cbe6f0}{sort\+Score\+List} (\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$scores)
+\begin{DoxyCompactList}\small\item\em Sort the list if scores. \end{DoxyCompactList}\item 
+void \hyperlink{kassbriik_8h_a38c0549e2a30edd606ea23cccd0ebde1}{copy\+Score\+List} (\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$dest, \hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} src)
+\begin{DoxyCompactList}\small\item\em Copy a source list in the dest list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{kassbriik_8h_ad3fe337408f16c132c895f2b59326410}\label{kassbriik_8h_ad3fe337408f16c132c895f2b59326410}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!C\+H\+E\+CK@{C\+H\+E\+CK}}
+\index{C\+H\+E\+CK@{C\+H\+E\+CK}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{C\+H\+E\+CK}{CHECK}}
+{\footnotesize\ttfamily \#define C\+H\+E\+CK(\begin{DoxyParamCaption}\item[{}]{sts,  }\item[{}]{msg }\end{DoxyParamCaption})~if ((sts) == -\/1) \{ perror(msg); exit(-\/1);\}}
+
+
+
+Check the return status of a function. 
+
+If the return is -\/1, priting \char`\"{}msg\char`\"{} in stderr and the errno. Then exit with -\/1 code. 
+
+Definition at line 47 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a0118c63c161e4da398fa9d4e0f11879c}\label{kassbriik_8h_a0118c63c161e4da398fa9d4e0f11879c}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}}
+\index{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}{CONNECTION\_MSG\_TYPE}}
+{\footnotesize\ttfamily \#define C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE~1}
+
+
+
+Message type for client connection. 
+
+Message send by the client to connect to the server. 
+
+Definition at line 168 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a0e71ded84aa1312e91ea06eed7e5c654}\label{kassbriik_8h_a0e71ded84aa1312e91ea06eed7e5c654}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG@{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG}}
+\index{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG@{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG}{CONNECTION\_NOTIFY\_MSG}}
+{\footnotesize\ttfamily \#define C\+O\+N\+N\+E\+C\+T\+I\+O\+N\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+M\+SG~\char`\"{}You are connected\char`\"{}}
+
+
+
+Response of the server when the client is connected. 
+
+
+
+Definition at line 175 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a4143446cc4b5108a3ab124ac3c5b2e2e}\label{kassbriik_8h_a4143446cc4b5108a3ab124ac3c5b2e2e}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}}
+\index{E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}{END\_GAME\_MSG\_TYPE}}
+{\footnotesize\ttfamily \#define E\+N\+D\+\_\+\+G\+A\+M\+E\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE~3}
+
+
+
+Message type to notify end of the game. 
+
+Type of the message send by a client to notify the server that a player has end his game. When a message of this type is send, it must contain the score of the player. 
+
+Definition at line 203 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_aaeece299664ddd15098e689c50d6a5a7}\label{kassbriik_8h_aaeece299664ddd15098e689c50d6a5a7}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}}
+\index{G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}{GAME\_STARTED\_MSG\_TYPE}}
+{\footnotesize\ttfamily \#define G\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE~2}
+
+
+
+Message type to notify that the game is started. 
+
+Type of the message send by clients to the server to notify him that it has started the game. 
+
+Definition at line 193 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a1a92f29d280d7de1b5bc07f16dc933bf}\label{kassbriik_8h_a1a92f29d280d7de1b5bc07f16dc933bf}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE@{M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE}}
+\index{M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE@{M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE}{MAX\_BODY\_MSG\_SIZE}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+B\+O\+D\+Y\+\_\+\+M\+S\+G\+\_\+\+S\+I\+ZE~256}
+
+
+
+Size maximal of a message to send or read from the message queue. 
+
+
+
+Definition at line 145 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a0a8f91f93d75a07f0ae45077db45b3eb}\label{kassbriik_8h_a0a8f91f93d75a07f0ae45077db45b3eb}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS@{M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS}}
+\index{M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS@{M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS}{MAX\_CLIENTS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+C\+L\+I\+E\+N\+TS~9}
+
+
+
+Number max of clients that the server can accept. 
+
+
+
+Definition at line 54 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_acebb45f6d9740063956da4fc574b2b04}\label{kassbriik_8h_acebb45f6d9740063956da4fc574b2b04}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!M\+S\+G\+\_\+\+K\+EY@{M\+S\+G\+\_\+\+K\+EY}}
+\index{M\+S\+G\+\_\+\+K\+EY@{M\+S\+G\+\_\+\+K\+EY}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{M\+S\+G\+\_\+\+K\+EY}{MSG\_KEY}}
+{\footnotesize\ttfamily \#define M\+S\+G\+\_\+\+K\+EY~ftok(\char`\"{}/home/player/msg\+\_\+kassbriik\char`\"{}, 1)}
+
+
+
+Key ot acces to the message queue. 
+
+
+
+Definition at line 159 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a9fd0f43f293031d18a7b06276db6d664}\label{kassbriik_8h_a9fd0f43f293031d18a7b06276db6d664}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!M\+S\+G\+\_\+\+M\+O\+DE@{M\+S\+G\+\_\+\+M\+O\+DE}}
+\index{M\+S\+G\+\_\+\+M\+O\+DE@{M\+S\+G\+\_\+\+M\+O\+DE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{M\+S\+G\+\_\+\+M\+O\+DE}{MSG\_MODE}}
+{\footnotesize\ttfamily \#define M\+S\+G\+\_\+\+M\+O\+DE~0666}
+
+
+
+Opening mode of the message queue. 
+
+
+
+Definition at line 152 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a76c877269a8e697e34ca79d0a26665f5}\label{kassbriik_8h_a76c877269a8e697e34ca79d0a26665f5}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}}
+\index{S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}{SCORE\_READ\_MSG\_TYPE}}
+{\footnotesize\ttfamily \#define S\+C\+O\+R\+E\+\_\+\+R\+E\+A\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE~5}
+
+
+
+Message type to notify that scores has been read. 
+
+Type of the message send by the server to notify a client that it has read the scores. 
+
+Definition at line 230 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a66695a5fa7a9e8bd3257dbdafe0b256e}\label{kassbriik_8h_a66695a5fa7a9e8bd3257dbdafe0b256e}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}}
+\index{S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE@{S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE}{SCORE\_RECEIVED\_MSG\_TYPE}}
+{\footnotesize\ttfamily \#define S\+C\+O\+R\+E\+\_\+\+R\+E\+C\+E\+I\+V\+E\+D\+\_\+\+M\+S\+G\+\_\+\+T\+Y\+PE~4}
+
+
+
+Message type to notify that score is received. 
+
+Type of the message send by the server to notify a client that it has received its player\textquotesingle{}s score. 
+
+Definition at line 212 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_ab20bc32ef9a15349cc85db5174d18364}\label{kassbriik_8h_ab20bc32ef9a15349cc85db5174d18364}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG@{S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG}}
+\index{S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG@{S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG}{SCORE\_WRITTEN\_MSG}}
+{\footnotesize\ttfamily \#define S\+C\+O\+R\+E\+\_\+\+W\+R\+I\+T\+T\+E\+N\+\_\+\+M\+SG~\char`\"{}Scores can be read\char`\"{}}
+
+
+
+Message send to notify that scores can be read. 
+
+Message send to a client to notify him that he can read the scores in the shm 
+
+Definition at line 221 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a53ad8675df847e45a63bcb40ff793745}\label{kassbriik_8h_a53ad8675df847e45a63bcb40ff793745}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME@{S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME}}
+\index{S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME@{S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME}{SEM\_SHM\_NAME}}
+{\footnotesize\ttfamily \#define S\+E\+M\+\_\+\+S\+H\+M\+\_\+\+N\+A\+ME~\char`\"{}kassbriik\+\_\+shm\+\_\+sem\char`\"{}}
+
+
+
+Definition at line 69 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a31d581c814a72a1c69bd228b078d6b69}\label{kassbriik_8h_a31d581c814a72a1c69bd228b078d6b69}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!S\+H\+M\+\_\+\+K\+EY@{S\+H\+M\+\_\+\+K\+EY}}
+\index{S\+H\+M\+\_\+\+K\+EY@{S\+H\+M\+\_\+\+K\+EY}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{S\+H\+M\+\_\+\+K\+EY}{SHM\_KEY}}
+{\footnotesize\ttfamily \#define S\+H\+M\+\_\+\+K\+EY~ftok(\char`\"{}/home/player/shm\+\_\+kassbriik\char`\"{}, 1)}
+
+
+
+Key to acces to the shm. 
+
+
+
+Definition at line 84 of file kassbriik.\+h.
+
+\mbox{\Hypertarget{kassbriik_8h_a5aace718615ca24772083216b8322d95}\label{kassbriik_8h_a5aace718615ca24772083216b8322d95}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG@{S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG}}
+\index{S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG@{S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG}{START\_GAME\_MSG}}
+{\footnotesize\ttfamily \#define S\+T\+A\+R\+T\+\_\+\+G\+A\+M\+E\+\_\+\+M\+SG~\char`\"{}Game must start\char`\"{}}
+
+
+
+Message to start the game. 
+
+The message send by server to all clients to notify them that they must start the game. 
+
+Definition at line 184 of file kassbriik.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{kassbriik_8h_a8256930a164ca52f5a7532acc9a2725d}\label{kassbriik_8h_a8256930a164ca52f5a7532acc9a2725d}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!t\+\_\+body@{t\+\_\+body}}
+\index{t\+\_\+body@{t\+\_\+body}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{t\+\_\+body}{t\_body}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structbody}{body}  \hyperlink{structt__body}{t\+\_\+body}}
+
+\mbox{\Hypertarget{kassbriik_8h_a033810dbd32f066a84c8af1fa6b1cae7}\label{kassbriik_8h_a033810dbd32f066a84c8af1fa6b1cae7}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!t\+\_\+request@{t\+\_\+request}}
+\index{t\+\_\+request@{t\+\_\+request}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{t\+\_\+request}{t\_request}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structrequest}{request}  \hyperlink{structt__request}{t\+\_\+request}}
+
+\mbox{\Hypertarget{kassbriik_8h_aceeef36f61cc8b9309737f48b70323db}\label{kassbriik_8h_aceeef36f61cc8b9309737f48b70323db}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!t\+\_\+score@{t\+\_\+score}}
+\index{t\+\_\+score@{t\+\_\+score}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{t\+\_\+score}{t\_score}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structscore}{score}  \hyperlink{structt__score}{t\+\_\+score}}
+
+\mbox{\Hypertarget{kassbriik_8h_a3922a6d636a23086466165dc8227070c}\label{kassbriik_8h_a3922a6d636a23086466165dc8227070c}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!t\+\_\+scores\+\_\+list@{t\+\_\+scores\+\_\+list}}
+\index{t\+\_\+scores\+\_\+list@{t\+\_\+scores\+\_\+list}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{t\+\_\+scores\+\_\+list}{t\_scores\_list}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structscores__list}{scores\+\_\+list}  \hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{kassbriik_8h_a38c0549e2a30edd606ea23cccd0ebde1}\label{kassbriik_8h_a38c0549e2a30edd606ea23cccd0ebde1}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!copy\+Score\+List@{copy\+Score\+List}}
+\index{copy\+Score\+List@{copy\+Score\+List}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{copy\+Score\+List()}{copyScoreList()}}
+{\footnotesize\ttfamily void copy\+Score\+List (\begin{DoxyParamCaption}\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$}]{dest,  }\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list}}]{src }\end{DoxyParamCaption})}
+
+
+
+Copy a source list in the dest list. 
+
+Copy the src list in the dest list preventing from accessing to the dest list when modifying the src list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & The destiantion list. \\
+\hline
+{\em src} & The source list. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 36 of file kassbriik.\+c.
+
+\mbox{\Hypertarget{kassbriik_8h_ae830f425ca982cfa3e5361fca4cbe6f0}\label{kassbriik_8h_ae830f425ca982cfa3e5361fca4cbe6f0}} 
+\index{kassbriik.\+h@{kassbriik.\+h}!sort\+Score\+List@{sort\+Score\+List}}
+\index{sort\+Score\+List@{sort\+Score\+List}!kassbriik.\+h@{kassbriik.\+h}}
+\subsubsection{\texorpdfstring{sort\+Score\+List()}{sortScoreList()}}
+{\footnotesize\ttfamily void sort\+Score\+List (\begin{DoxyParamCaption}\item[{\hyperlink{structt__scores__list}{t\+\_\+scores\+\_\+list} $\ast$}]{scores }\end{DoxyParamCaption})}
+
+
+
+Sort the list if scores. 
+
+/file \hyperlink{kassbriik_8c}{kassbriik.\+c} /author Corentin D\+E\+S\+T\+R\+EZ \& Valentin G\+U\+I\+B\+E\+R\+T\+E\+AU /date 12 Apr 2021 /brief Source code of the client\textquotesingle{}s library
+
+This library containts the definition of some useful values, functions and structures that are used by the server.
+
+Sort the score list from lower score to the greater.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scores} & The list of scores that must be sorted. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 19 of file kassbriik.\+c.
+

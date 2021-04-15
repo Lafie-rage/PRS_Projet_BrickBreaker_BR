@@ -1,0 +1,399 @@
+\hypertarget{game__ui_8c}{}\section{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/game\+\_\+ui.c File Reference}
+\label{game__ui_8c}\index{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/game\+\_\+ui.\+c@{/home/lafie-\/rage/\+Cours/\+L\+A1/\+P\+R\+S/\+G\+I\+T\+\_\+\+P\+R\+O\+J\+E\+T\+S/\+P\+R\+S\+\_\+\+Projet\+\_\+\+Brick\+Breaker\+\_\+\+B\+R/game\+\_\+ui.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$termios.\+h$>$}\newline
+{\ttfamily \#include $<$semaphore.\+h$>$}\newline
+{\ttfamily \#include $<$sys/select.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}game\+\_\+ui.\+h\char`\"{}}\newline
+Include dependency graph for game\+\_\+ui.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{game__ui_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{game__ui_8c_a43d17e02a89ed4b1459b42aa86901f51}{start\+Game\+UI} ()
+\item 
+void \hyperlink{game__ui_8c_a4f6f385b448f3bfe07f14a810e8fae8c}{place\+Element\+From} (int x, int y, int w, int h, char e)
+\begin{DoxyCompactList}\small\item\em place every element possible in the game to set the base screen (or debug purposes). \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_aad32b015d56f990ecefdc5a467d34ebb}{place\+Huge\+Racket} ()
+\begin{DoxyCompactList}\small\item\em place a huge racket avoiding death. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_a1b646a9989d9764d785de9a332962944}{remove\+Huge\+Racket} ()
+\begin{DoxyCompactList}\small\item\em remove the huge racket avoiding death. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_ae8d0d97bd4f5aa117715206251fbf053}{place\+Brick} (int x, int y, \hyperlink{structgame__t}{game\+\_\+t} $\ast$game\+\_\+e)
+\begin{DoxyCompactList}\small\item\em place one brick beginning at the x and y coordonates indicated. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_aeec2b4731d6382c72e268c2fdb2b3466}{destroy\+Brick} (int x, int y, \hyperlink{structgame__t}{game\+\_\+t} $\ast$game\+\_\+e)
+\begin{DoxyCompactList}\small\item\em destroy the brick begining at the x and y coordonates indicated. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_a183b7fa713e49fcf385bdc14b870c388}{place\+Bricks} (int x, int y, int mx, int my, \hyperlink{structgame__t}{game\+\_\+t} $\ast$game\+\_\+e)
+\begin{DoxyCompactList}\small\item\em place brick beginning at the x and y coordonates indicated to the mx and my coordonates indicated. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_ac77d5caeeb189a0491e5874625211c4c}{move\+Racket} (\hyperlink{structracket__t}{racket\+\_\+t} $\ast$racket\+\_\+e, char c)
+\begin{DoxyCompactList}\small\item\em move the racket accordingly to the input of the user q for left d for right. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_ad7fd45cf7c5d225bf8077fbe401c9ab7}{collision} (\hyperlink{structball__t}{ball\+\_\+t} $\ast$ball\+\_\+e, \hyperlink{structgame__t}{game\+\_\+t} $\ast$game\+\_\+e)
+\begin{DoxyCompactList}\small\item\em deals with all the collisions in the game. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_a45d1e11ad1048311b06473924acf8ca6}{move\+B\+A\+LL} (\hyperlink{structball__t}{ball\+\_\+t} $\ast$ball\+\_\+e, \hyperlink{structgame__t}{game\+\_\+t} $\ast$game\+\_\+e)
+\begin{DoxyCompactList}\small\item\em move the ball after the collision treatment. \end{DoxyCompactList}\item 
+void \hyperlink{game__ui_8c_a153f6816fbb1f4e0132d2fd3a8dd4057}{draw\+Screen} (\hyperlink{structgame__t}{game\+\_\+t} $\ast$game\+\_\+e)
+\begin{DoxyCompactList}\small\item\em draws the caracter on the user screen accordingly to the array \char`\"{}screen\char`\"{} content. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{game__ui_8c_a330b973683c1d1f6830619af51b47335}{f\+Display} (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em function used in a thread to deal with the display the game on the user\textquotesingle{}s screen. \end{DoxyCompactList}\item 
+int \hyperlink{game__ui_8c_ad5451da499ab9d3907da8dd7060ab677}{kbhit} ()
+\item 
+int \hyperlink{game__ui_8c_a160f6d2893bb6b89ab3ad5d863c20e3d}{getch} ()
+\item 
+void $\ast$ \hyperlink{game__ui_8c_aa9c5404a0d538b8ab80211cb0d71363f}{f\+Input} (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em function used in a thread to deal with the input of the game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \hyperlink{game__ui_8c_a1f8be2a692d10738ddc1bbd4856c9d33}{screen} \mbox{[}\hyperlink{game__ui_8h_a321cf56a944d4adca0ea6dfbd2577030}{W\+I\+D\+T\+H\+\_\+\+M\+AX}\mbox{]}\mbox{[}\hyperlink{game__ui_8h_a3f1ca00f1b8d2d99f50894e87f6f62b2}{H\+E\+I\+G\+H\+T\+\_\+\+M\+AX}\mbox{]}
+\item 
+\hyperlink{structbrick__t}{brick\+\_\+t} $\ast$ \hyperlink{game__ui_8c_a1565f4f4190f2c4191975a1f586f8629}{bricks}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{game__ui_8c_ad7fd45cf7c5d225bf8077fbe401c9ab7}\label{game__ui_8c_ad7fd45cf7c5d225bf8077fbe401c9ab7}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!collision@{collision}}
+\index{collision@{collision}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{collision()}{collision()}}
+{\footnotesize\ttfamily void collision (\begin{DoxyParamCaption}\item[{\hyperlink{structball__t}{ball\+\_\+t} $\ast$}]{ball\+\_\+e,  }\item[{\hyperlink{structgame__t}{game\+\_\+t} $\ast$}]{game\+\_\+e }\end{DoxyParamCaption})}
+
+
+
+deals with all the collisions in the game. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em game\+\_\+e} & structure containing all game info. \\
+\hline
+{\em ball\+\_\+e} & structure containing all ball info. \\
+\hline
+\end{DoxyParams}
+this section deals with the ball hiting th bottom of the screen
+
+heart of the collision detection
+
+$<$ potential detection on the pair component of the brick hit. 
+
+Definition at line 269 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_aeec2b4731d6382c72e268c2fdb2b3466}\label{game__ui_8c_aeec2b4731d6382c72e268c2fdb2b3466}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!destroy\+Brick@{destroy\+Brick}}
+\index{destroy\+Brick@{destroy\+Brick}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{destroy\+Brick()}{destroyBrick()}}
+{\footnotesize\ttfamily void destroy\+Brick (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{\hyperlink{structgame__t}{game\+\_\+t} $\ast$}]{game\+\_\+e }\end{DoxyParamCaption})}
+
+
+
+destroy the brick begining at the x and y coordonates indicated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & base horizontal position of the brick. \\
+\hline
+{\em y} & base vertical position of the brick. \\
+\hline
+{\em game\+\_\+e} & structure containing all game info. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 205 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a153f6816fbb1f4e0132d2fd3a8dd4057}\label{game__ui_8c_a153f6816fbb1f4e0132d2fd3a8dd4057}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!draw\+Screen@{draw\+Screen}}
+\index{draw\+Screen@{draw\+Screen}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{draw\+Screen()}{drawScreen()}}
+{\footnotesize\ttfamily void draw\+Screen (\begin{DoxyParamCaption}\item[{\hyperlink{structgame__t}{game\+\_\+t} $\ast$}]{game\+\_\+e }\end{DoxyParamCaption})}
+
+
+
+draws the caracter on the user screen accordingly to the array \char`\"{}screen\char`\"{} content. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em game\+\_\+e} & structure containing all game info. \\
+\hline
+\end{DoxyParams}
+draws the bottom of the screen with different information for the user.
+
+Definition at line 388 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a330b973683c1d1f6830619af51b47335}\label{game__ui_8c_a330b973683c1d1f6830619af51b47335}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!f\+Display@{f\+Display}}
+\index{f\+Display@{f\+Display}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{f\+Display()}{fDisplay()}}
+{\footnotesize\ttfamily void $\ast$ f\+Display (\begin{DoxyParamCaption}\item[{void $\ast$}]{arg }\end{DoxyParamCaption})}
+
+
+
+function used in a thread to deal with the display the game on the user\textquotesingle{}s screen. 
+
+I couldn\textquotesingle{}t find the original site for kbhit and getch definition but they can be found on \+: \href{https://forum.df2.ru/lofiversion/index.php/t16583-50.html}{\tt https\+://forum.\+df2.\+ru/lofiversion/index.\+php/t16583-\/50.\+html} 
+
+Definition at line 435 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_aa9c5404a0d538b8ab80211cb0d71363f}\label{game__ui_8c_aa9c5404a0d538b8ab80211cb0d71363f}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!f\+Input@{f\+Input}}
+\index{f\+Input@{f\+Input}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{f\+Input()}{fInput()}}
+{\footnotesize\ttfamily void $\ast$ f\+Input (\begin{DoxyParamCaption}\item[{void $\ast$}]{arg }\end{DoxyParamCaption})}
+
+
+
+function used in a thread to deal with the input of the game. 
+
+
+
+Definition at line 465 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a160f6d2893bb6b89ab3ad5d863c20e3d}\label{game__ui_8c_a160f6d2893bb6b89ab3ad5d863c20e3d}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!getch@{getch}}
+\index{getch@{getch}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{getch()}{getch()}}
+{\footnotesize\ttfamily int getch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+I couldn\textquotesingle{}t find the original site for kbhit and getch definition but they can be found on \+: \href{https://forum.df2.ru/lofiversion/index.php/t16583-50.html}{\tt https\+://forum.\+df2.\+ru/lofiversion/index.\+php/t16583-\/50.\+html} 
+
+Definition at line 454 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_ad5451da499ab9d3907da8dd7060ab677}\label{game__ui_8c_ad5451da499ab9d3907da8dd7060ab677}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!kbhit@{kbhit}}
+\index{kbhit@{kbhit}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{kbhit()}{kbhit()}}
+{\footnotesize\ttfamily int kbhit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 446 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a45d1e11ad1048311b06473924acf8ca6}\label{game__ui_8c_a45d1e11ad1048311b06473924acf8ca6}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!move\+B\+A\+LL@{move\+B\+A\+LL}}
+\index{move\+B\+A\+LL@{move\+B\+A\+LL}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{move\+B\+A\+L\+L()}{moveBALL()}}
+{\footnotesize\ttfamily void move\+B\+A\+LL (\begin{DoxyParamCaption}\item[{\hyperlink{structball__t}{ball\+\_\+t} $\ast$}]{ball\+\_\+e,  }\item[{\hyperlink{structgame__t}{game\+\_\+t} $\ast$}]{game\+\_\+e }\end{DoxyParamCaption})}
+
+
+
+move the ball after the collision treatment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em game\+\_\+e} & structure containing all game info. \\
+\hline
+{\em ball\+\_\+e} & structure containing all ball info. \\
+\hline
+\end{DoxyParams}
+$<$ empty the last position of the ball on the screen.
+
+$<$ draws the ball on it\textquotesingle{}s new position on the screen. 
+
+Definition at line 376 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_ac77d5caeeb189a0491e5874625211c4c}\label{game__ui_8c_ac77d5caeeb189a0491e5874625211c4c}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!move\+Racket@{move\+Racket}}
+\index{move\+Racket@{move\+Racket}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{move\+Racket()}{moveRacket()}}
+{\footnotesize\ttfamily void move\+Racket (\begin{DoxyParamCaption}\item[{\hyperlink{structracket__t}{racket\+\_\+t} $\ast$}]{racket\+\_\+e,  }\item[{char}]{c }\end{DoxyParamCaption})}
+
+
+
+move the racket accordingly to the input of the user q for left d for right. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ball\+\_\+e} & structure containing all ball info. \\
+\hline
+{\em c} & input received from the keyboard. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 236 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_ae8d0d97bd4f5aa117715206251fbf053}\label{game__ui_8c_ae8d0d97bd4f5aa117715206251fbf053}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!place\+Brick@{place\+Brick}}
+\index{place\+Brick@{place\+Brick}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{place\+Brick()}{placeBrick()}}
+{\footnotesize\ttfamily void place\+Brick (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{\hyperlink{structgame__t}{game\+\_\+t} $\ast$}]{game\+\_\+e }\end{DoxyParamCaption})}
+
+
+
+place one brick beginning at the x and y coordonates indicated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & base horizontal position of the brick. \\
+\hline
+{\em y} & base vertical position of the brick. \\
+\hline
+{\em game\+\_\+e} & structure containing all game info. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 193 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a183b7fa713e49fcf385bdc14b870c388}\label{game__ui_8c_a183b7fa713e49fcf385bdc14b870c388}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!place\+Bricks@{place\+Bricks}}
+\index{place\+Bricks@{place\+Bricks}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{place\+Bricks()}{placeBricks()}}
+{\footnotesize\ttfamily void place\+Bricks (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{mx,  }\item[{int}]{my,  }\item[{\hyperlink{structgame__t}{game\+\_\+t} $\ast$}]{game\+\_\+e }\end{DoxyParamCaption})}
+
+
+
+place brick beginning at the x and y coordonates indicated to the mx and my coordonates indicated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & base horizontal position. \\
+\hline
+{\em y} & base vertical position. \\
+\hline
+{\em mx} & end horizontal position. \\
+\hline
+{\em my} & end vertical position. \\
+\hline
+{\em game\+\_\+e} & structure containing all game info. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 219 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a4f6f385b448f3bfe07f14a810e8fae8c}\label{game__ui_8c_a4f6f385b448f3bfe07f14a810e8fae8c}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!place\+Element\+From@{place\+Element\+From}}
+\index{place\+Element\+From@{place\+Element\+From}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{place\+Element\+From()}{placeElementFrom()}}
+{\footnotesize\ttfamily void place\+Element\+From (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{w,  }\item[{int}]{h,  }\item[{char}]{e }\end{DoxyParamCaption})}
+
+
+
+place every element possible in the game to set the base screen (or debug purposes). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & base horizontal position. \\
+\hline
+{\em y} & base vertical position. \\
+\hline
+{\em w} & end horizontal position. \\
+\hline
+{\em h} & end vertical position. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 140 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_aad32b015d56f990ecefdc5a467d34ebb}\label{game__ui_8c_aad32b015d56f990ecefdc5a467d34ebb}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!place\+Huge\+Racket@{place\+Huge\+Racket}}
+\index{place\+Huge\+Racket@{place\+Huge\+Racket}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{place\+Huge\+Racket()}{placeHugeRacket()}}
+{\footnotesize\ttfamily void place\+Huge\+Racket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+place a huge racket avoiding death. 
+
+
+
+Definition at line 175 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a1b646a9989d9764d785de9a332962944}\label{game__ui_8c_a1b646a9989d9764d785de9a332962944}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!remove\+Huge\+Racket@{remove\+Huge\+Racket}}
+\index{remove\+Huge\+Racket@{remove\+Huge\+Racket}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{remove\+Huge\+Racket()}{removeHugeRacket()}}
+{\footnotesize\ttfamily void remove\+Huge\+Racket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+remove the huge racket avoiding death. 
+
+
+
+Definition at line 184 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a43d17e02a89ed4b1459b42aa86901f51}\label{game__ui_8c_a43d17e02a89ed4b1459b42aa86901f51}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!start\+Game\+UI@{start\+Game\+UI}}
+\index{start\+Game\+UI@{start\+Game\+UI}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{start\+Game\+U\+I()}{startGameUI()}}
+{\footnotesize\ttfamily int start\+Game\+UI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\textbackslash{} Brief Start the game\textquotesingle{}s UI
+
+Start the game UI to let the player play the game after that the server ask it. Then return the player\textquotesingle{}s score.
+
+\begin{DoxyReturn}{Returns}
+The player\textquotesingle{}s score at the end of the game. 
+\end{DoxyReturn}
+part used to initialise the game with its parameters.
+
+$<$ fill the screen with void.
+
+$<$ place the roof.
+
+$<$ place the walls.
+
+$<$ place the floor.
+
+$<$ place the bricks.
+
+place the racket and set its parameters.
+
+$<$ used to display on the screen the racket.
+
+initialisation of the struct ball.
+
+initialisation of the struct containing all oher stucts.
+
+creation of the two threads dealing with the inputs and the display of the game.
+
+$<$ use system call to make terminal send all keystrokes directly to stdin without waiting for return presses.
+
+end of the part used to initialise the game with its parameters.
+
+ball position update routine
+
+part to set back the default terminal configuration
+
+$<$ set back echo mode.
+
+$<$ set the changed setting to the terminal.
+
+$<$ set back of the tty to cooked (waiting for return to validate input).
+
+closure of the threads and end of the program.
+
+Definition at line 32 of file game\+\_\+ui.\+c.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{game__ui_8c_a1565f4f4190f2c4191975a1f586f8629}\label{game__ui_8c_a1565f4f4190f2c4191975a1f586f8629}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!bricks@{bricks}}
+\index{bricks@{bricks}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{bricks}{bricks}}
+{\footnotesize\ttfamily \hyperlink{structbrick__t}{brick\+\_\+t}$\ast$ bricks}
+
+array all the bricks on the screen. 
+
+Definition at line 30 of file game\+\_\+ui.\+c.
+
+\mbox{\Hypertarget{game__ui_8c_a1f8be2a692d10738ddc1bbd4856c9d33}\label{game__ui_8c_a1f8be2a692d10738ddc1bbd4856c9d33}} 
+\index{game\+\_\+ui.\+c@{game\+\_\+ui.\+c}!screen@{screen}}
+\index{screen@{screen}!game\+\_\+ui.\+c@{game\+\_\+ui.\+c}}
+\subsubsection{\texorpdfstring{screen}{screen}}
+{\footnotesize\ttfamily char screen\mbox{[}\hyperlink{game__ui_8h_a321cf56a944d4adca0ea6dfbd2577030}{W\+I\+D\+T\+H\+\_\+\+M\+AX}\mbox{]}\mbox{[}\hyperlink{game__ui_8h_a3f1ca00f1b8d2d99f50894e87f6f62b2}{H\+E\+I\+G\+H\+T\+\_\+\+M\+AX}\mbox{]}}
+
+
+
+Definition at line 28 of file game\+\_\+ui.\+c.
+
