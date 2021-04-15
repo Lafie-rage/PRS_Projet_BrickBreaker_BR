@@ -1,615 +1,447 @@
-// kasbrik.c
+/**
+ * \file kassbriik.c
+ * \brief code for the game itself.
+ * \author Auteur Corentin Destrez, Valentin Guiberteau
+ * \version 0.4
+ * \date 16 april 2021
+ *
+ * This file groups all the functions applying to the game itself such as the input drawing functions.
+ *
+ */
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <semaphore.h>
 #include <termios.h>
-
-#include <string.h>
+#include <semaphore.h>
 #include <sys/select.h>
-#include <sys/ioctl.h>
 
+/*****************************************************************************/
+/*                              CUSTOM LIBRARIES                             */
+/*****************************************************************************/
 #include "game_ui.h"
-//#include <termios.h>
-
-#define GAME_SPEED 32000
-#define WIDTH_MAX 80	// Screen width
-#define HEIGHT_MAX 20	// Screen height
-/*
-#define WIDTH_MAX 80	// Screen width
 
 
-#define HEIGHT_MAX 20	// Screen height
-*/
-#define SE 0			// South East direction
-#define NE 1			// North East direction
-#define NW 2			// North West direction
-#define SW 3			// South West direction
-
-#define BRICK_WIDTH 2	// Brick width
-#define BRICK 'B'		// caracter used for bricks
-#define BALL 'o'		// caracter used for the ball
-
-
-#define CHECK(sts, msg) if ((sts)==-1) {perror(msg); exit(-1);}
-pthread_mutex_t screenAccess = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t consoleAccess = PTHREAD_MUTEX_INITIALIZER;
 char screen[WIDTH_MAX][HEIGHT_MAX];
 
-sem_t termAccess ;
+brick_t *bricks;	/*!< array all the bricks on the screen. */
 
-typedef struct ball_t
+int startGameUI()
 {
-	int posX;
-	int posY;
-    int direction;
-    int moving;
-    int vert;
-    int hor;
-}ball_t;
+	pthread_t thInput;
+	pthread_t thDisplay;
 
-typedef struct brick_t
-{
-	int posX;
-	int posY;
-	int width;
-}brick_t;
+	struct termios infos;
 
-brick_t *bricks;
+ 	// recover terminal info
+	if (tcgetattr(STDIN_FILENO, &infos) == -1)
+	{
+	  fprintf(stderr, "Erreur tcgetattr.\n");
+	  return (EXIT_FAILURE);
+	}
+	// switch to no echo mod (we don't wan't to see our key presses)
+	infos.c_lflag &= ~ECHO;
 
-typedef struct racket_t
-{
-	int posX;
-	int posY;
-}racket_t;
+	// set new setting to terminal
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &infos) == -1)
+	{
+	  fprintf(stderr, "Erreur tcsetattr.\n");
+	  return (EXIT_FAILURE);
+	}
 
-typedef struct game_t
-{
-	int score;
-    int end;
-    int nbBall;
-	int bricksRemaining;
-	int bricksBeginning;
-	int bricksWidth;
-	int fromX;
-	int bricksHeight;
-	int fromY;
-	int turbo;
-}game_t;
+	/**
+	 * part used to initialise the game with its parameters.
+	 */
 
-typedef struct all_t
-{
-	struct ball_t *all_ball_e;
-	struct racket_t *all_racket_e;
-	struct game_t *all_game_e;
-}all_t;
+	game_t game_e;
+	game_e.score=0;
+	game_e.end=0;
+	game_e.nbBall=3;
+	game_e.bricksRemaining=0;
+	game_e.turbo=1;
+	game_e.cheat=0;
 
+	placeElementFrom(0, 0, WIDTH_MAX, HEIGHT_MAX, EMPTY);												/*!< fill the screen with void. */
+	placeElementFrom(0, 0, WIDTH_MAX, UPPER_WALL_HEIGHT, WALL);											/*!< place the roof. */
+	placeElementFrom(0, 0, SIDE_WALL_WIDTH, HEIGHT_MAX, WALL);											/*!< place the walls. */
+	placeElementFrom(WIDTH_MAX-SIDE_WALL_WIDTH,0, WIDTH_MAX, HEIGHT_MAX, WALL);
+	placeElementFrom(SIDE_WALL_WIDTH,HEIGHT_MAX-1, WIDTH_MAX-SIDE_WALL_WIDTH, HEIGHT_MAX, E_TRIGGER);	/*!< place the floor. */
+	placeBricks(SIDE_WALL_WIDTH, 5, WIDTH_MAX-SIDE_WALL_WIDTH, 9, &game_e);								/*!< place the bricks. */
 
-int placeVoidFrom(int x, int y, int w, int h)
-{
+	/**
+	 * place the racket and set its parameters.
+	 */
+	racket_t racket_e ;
+	racket_e.posX=(WIDTH_MAX/2)-2;
+	racket_e.posY=HEIGHT_MAX-2;
+	moveRacket(&racket_e, '0');		/*!< used to display on the screen the racket. */
 
-	return 0;
+	/**
+	 * initialisation of the struct ball.
+	 */
+	ball_t ball_e;
+	ball_e.posX=(WIDTH_MAX/2)+1;
+	ball_e.posY=HEIGHT_MAX-4;
+	ball_e.moving=0;
+	ball_e.dirX=1;
+	ball_e.dirY=-1;
+
+	/**
+	 * initialisation of the struct containing all oher stucts.
+	 */
+	all_t *all_e = malloc(sizeof(all_t));
+	all_e->all_game_e= &game_e;
+	all_e->all_ball_e= &ball_e;
+	all_e->all_racket_e= &racket_e;
+
+	/**
+	 * creation of the two threads dealing with the inputs and the display of the game.
+	 */
+	pthread_create(&thInput, NULL, fInput, all_e);
+	pthread_create(&thDisplay, NULL, fDisplay, all_e);
+
+	system ("/bin/stty raw");	/*!< use system call to make terminal send all keystrokes directly to stdin without waiting for return presses. */
+
+	/**
+	 * end of the part used to initialise the game with its parameters.
+	 */
+
+	/**
+	 * ball position update routine
+	 */
+	while(game_e.end==0)
+	{
+		usleep(GAME_SPEED/(game_e.turbo));
+		moveBALL(&ball_e, &game_e);
+	}
+
+	/**
+	 * part to set back the default terminal configuration
+	 */
+	infos.c_lflag |= ECHO; 										/*!< set back echo mode. */
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &infos) == -1) 		/*!< set the changed setting to the terminal. */
+	{
+	  fprintf(stderr, "Erreur tcsetattr.\n");
+	  return (EXIT_FAILURE);
+	}
+	system ("/bin/stty cooked");								/*!< set back of the tty to cooked (waiting for return to validate input). */
+
+	/**
+	 * closure of the threads and end of the program.
+	 */
+	pthread_join(thInput, NULL);
+	pthread_join(thDisplay, NULL);
+	return game_e.score;
 }
 
-int placeElementFrom(int x, int y, int w, int h, char e)
+void placeElementFrom(int x, int y, int w, int h, char e)
 {
-	for(int py=y;py<h;py++)
+	int py;
+	int px;
+	for(py=y;py<h;py++)
 	{
-		for(int px=x;px<w;px++)
+		for(px=x;px<w;px++)
 		{
 			switch (e)
 			{
-				case 'V':
-					screen[px][py]='V';
+				case EMPTY:
+					screen[px][py]=EMPTY;
 					break;
-
 				case BRICK:
 					screen[px][py]=BRICK;
 					break;
-
-				case 'R':
-					screen[px][py]='=';
+				case RACKET:
+					screen[px][py]=RACKET;
 					break;
 				case BALL:
 					screen[px][py]=BALL;
 					break;
-				case 'W':
-					screen[px][py]='W';
+				case WALL:
+					screen[px][py]=WALL;
 					break;
-				case 'E':
-					screen[px][py]='E';
+				case E_TRIGGER:
+					screen[px][py]=E_TRIGGER;
 					break;
 				default :
-					screen[px][py]='W';
+					screen[px][py]=ERROR_C;
 			}
 		}
 	}
-	return 0;
 }
 
-int placeRacket(int x, int y)
+void placeHugeRacket()
 {
-	for(int wx=2; wx<WIDTH_MAX-2; wx++)
+	int wx;
+	for(wx=SIDE_WALL_WIDTH; wx<WIDTH_MAX-SIDE_WALL_WIDTH; wx++)
 	{
-		screen[wx][y]='R';
+		screen[wx][HEIGHT_MAX-3]=RACKET;
 	}
-	return 0;
 }
 
-int placeBrick(int x, int y, game_t *game_e)
+void removeHugeRacket()
 {
-	int i=game_e->bricksRemaining;
-	game_e->bricksRemaining++;
-	game_e->bricksBeginning++;
+	int wx;
+	for(wx=SIDE_WALL_WIDTH; wx<WIDTH_MAX-SIDE_WALL_WIDTH; wx++)
+	{
+		screen[wx][HEIGHT_MAX-3]=EMPTY;
+	}
+}
+
+void placeBrick(int x, int y, game_t *game_e)
+{
+	int wx;
+	int i=game_e->bricksRemaining++;
 	bricks[i].posX=x;
 	bricks[i].posY=y;
-	for(int wx=x; wx<x+BRICK_WIDTH; wx++)
+	for(wx=x; wx<x+BRICK_WIDTH; wx++)
 	{
 		screen[wx][y]=BRICK;
 	}
-	return 0;
 }
 
-int destroyBrick(int x, int y, game_t *game_e)
+void destroyBrick(int x, int y, game_t *game_e)
 {
-	int i=((x-2)/2)+((WIDTH_MAX-4)/2)*(y-5);
+	int wx;
+	int i=((x-(SIDE_WALL_WIDTH))/2)+((game_e->toX-game_e->fromX)/2)*(y-(game_e->fromY));
 	x=bricks[i].posX;
 	y=bricks[i].posY;
-	for(int wx=x; wx<x+BRICK_WIDTH; wx++)
+	for(wx=x; wx<x+BRICK_WIDTH; wx++)
 	{
-		screen[wx][y]='V';
+		screen[wx][y]=EMPTY;
 	}
 	game_e->bricksRemaining--;
 	game_e->score++;
-	return 0;
 }
 
-int placeBricks(int x, int y, int mx, int my, game_t *game_e)
+void placeBricks(int x, int y, int mx, int my, game_t *game_e)
 {
-	game_e->bricksWidth=mx-x;
+	int py;
+	int px;
 	game_e->fromX=x;
-	game_e->bricksHeight=my-y;
+	game_e->toX=mx;
 	game_e->fromY=y;
 	bricks=malloc( ((mx-x)*(my-y)) * sizeof(brick_t));
-	for(int py=y;py<my;py++)
+	for(py=y;py<my;py++)
 	{
-		for(int px=x;px<mx;px+=BRICK_WIDTH)
+		for(px=x;px<mx;px+=BRICK_WIDTH)
 		{
 			placeBrick(px, py, game_e);
 		}
 	}
-	return 0;
 }
 
-
-int moveRacket(struct racket_t *racket_e, char c)
+void moveRacket(racket_t *racket_e, char c)
 {
-
-	//fflush(stdin);
-	for(int wx=racket_e->posX; wx<racket_e->posX+5; wx++)
+	int wx;
+	// erase the actual racket
+	for(wx=racket_e->posX; wx<racket_e->posX+RACKET_SIZE; wx++)
 	{
-		screen[wx][racket_e->posY]='V';
+		screen[wx][racket_e->posY]=EMPTY;
 	}
 	switch (c)
 	{
 		case 'q':
-			if(racket_e->posX>2)
+			if(racket_e->posX>SIDE_WALL_WIDTH)
 			{
-				racket_e->posX-=1;
+				racket_e->posX--;
 			}
 			break;
 		case 'd':
-			if(racket_e->posX<WIDTH_MAX-7)
+			if(racket_e->posX<(WIDTH_MAX-(RACKET_SIZE+SIDE_WALL_WIDTH)))
 			{
-				racket_e->posX+=1;
+				racket_e->posX++;
 			}
 			break;
-		//default :
+		default :
+			// other input are dealt with in "fInput()" so nothing to treat here.
+			break;
 	}
-	for(int wx=racket_e->posX; wx<racket_e->posX+5; wx++)
+	// place the new racket position on the screen
+	for(wx=racket_e->posX; wx<racket_e->posX+RACKET_SIZE; wx++)
 	{
-		screen[wx][racket_e->posY]='R';
+		screen[wx][racket_e->posY]=RACKET;
 	}
-	/*for(int wx=2; wx<WIDTH_MAX-2; wx++)
-	{
-		screen[wx][y]='R';
-	}*/
-	return 0;
 }
 
-
-int placeBALL(struct ball_t *ball_e)
+void collision(ball_t *ball_e, game_t *game_e)
 {
-	screen[ball_e->posX][ball_e->posY]=BALL;
-	return 0;
-}
-
-int collision(struct ball_t *ball_e, struct game_t *game_e)
-{
+	/**
+	 * this section deals with the ball hiting th bottom of the screen
+	 */
 	if(screen[(ball_e->posX)][(ball_e->posY)+1]=='E')
 	{
-		game_e->nbBall-=1;
+		game_e->nbBall--;
 		if(game_e->nbBall==0)
 		{
 			game_e->end=1;
+			return;
 		}
-		return 0;
+		game_e->score/=2;
+		ball_e->posX=(WIDTH_MAX/2)+1;
+		ball_e->posY=HEIGHT_MAX-4;
+		ball_e->dirY=-1;
+		ball_e->dirX=1;
+		ball_e->moving=0;
+		return;
 	}
 
-	//if(screen[ball_e->posX+ball_e->hor][(ball_e->posY)+ball_e->vert]!='V'&&screen[ball_e->posX][(ball_e->posY)+ball_e->vert]!='V'&&screen[ball_e->posX+ball_e->hor][(ball_e->posY)!='V'])
+	/**
+	 * heart of the collision detection
+	 */
+	char diagonal_detection = screen[ball_e->posX+ball_e->dirX][ball_e->posY+ball_e->dirY];
+	char vertical_detection = screen[ball_e->posX][ball_e->posY+ball_e->dirY];
+	char horizontal_detection = screen[ball_e->posX+ball_e->dirX][ball_e->posY];
+
+	if(diagonal_detection!=EMPTY || vertical_detection!=EMPTY || horizontal_detection!=EMPTY )
 	{
-		switch(screen[ball_e->posX][(ball_e->posY)+(ball_e->vert)])
+		switch(vertical_detection)
 		{
-			case 'W':
-				switch(screen[(ball_e->posX)+ball_e->hor][(ball_e->posY)])
+			case WALL:
+				switch(horizontal_detection)
 				{
-					case 'V':
-						ball_e->vert*=-1;
+					case EMPTY:
+						ball_e->dirY*=-1;
 						break;
-					case 'W':
-						ball_e->vert*=-1;
-						ball_e->hor*=-1;
+					case WALL:
+						ball_e->dirY*=-1;
+						ball_e->dirX*=-1;
 						break;
 					default :
-						ball_e->direction=5;
-						ball_e->vert=1;
-						ball_e->hor=0;
+						ball_e->dirY=1;
+						ball_e->dirX=0;
 				}
 				break;
 			case BRICK :
-				switch(screen[(((ball_e->posX)/2)*2)+ball_e->hor*2][(ball_e->posY)])
+				switch(screen[((ball_e->posX/2)*2)+ball_e->dirX*2][ball_e->posY])			/*!< potential detection on the pair component of the brick hit. */
 				{
-					case 'V':
-						destroyBrick(ball_e->posX, (ball_e->posY)+ball_e->vert, game_e);
-						//destroyBrick(ball_e->posX+ball_e->hor, (ball_e->posY)+ball_e->vert);
-						ball_e->vert*=-1;
+					case EMPTY:
+						destroyBrick(ball_e->posX, ball_e->posY+ball_e->dirY, game_e);
+						ball_e->dirY*=-1;
 						break;
-					case 'W':
-						destroyBrick(ball_e->posX, (ball_e->posY)+ball_e->vert, game_e);
-						ball_e->vert*=-1;
-						ball_e->hor*=-1;
+					case WALL:
+						destroyBrick(ball_e->posX, ball_e->posY+ball_e->dirY, game_e);
+						ball_e->dirY*=-1;
+						ball_e->dirX*=-1;
 						break;
 					case BRICK :
-						destroyBrick(ball_e->posX, (ball_e->posY)+ball_e->vert, game_e);
-						//destroyBrick(ball_e->posX+ball_e->hor, (ball_e->posY), game_e);
-						ball_e->vert*=-1;
-						ball_e->hor*=-1;
+						destroyBrick(ball_e->posX, ball_e->posY+ball_e->dirY, game_e);
+						ball_e->dirY*=-1;
+						ball_e->dirX*=-1;
 						break;
 					default :
-						ball_e->direction=5;
-						ball_e->vert=1;
-						ball_e->hor=0;
+						ball_e->dirY=1;
+						ball_e->dirX=0;
 				}
 				break;
-			case 'R':
-				ball_e->vert*=-1;
-				if(screen[ball_e->posX+ball_e->hor][(ball_e->posY)+ball_e->vert]=='W')
+			case RACKET:
+				ball_e->dirY*=-1;
+				if(diagonal_detection==WALL)
 						{
-							//destroyBrick(ball_e->posX+ball_e->hor, (ball_e->posY)+ball_e->vert);
-							ball_e->hor*=-1;
+							ball_e->dirX*=-1;
 						}
 				break;
-			case 'V':
-				switch(screen[ball_e->posX+ball_e->hor][(ball_e->posY)])
+			case EMPTY:
+				switch(horizontal_detection)
 				{
-					case 'W':
-						ball_e->hor*=-1;
+					case WALL:
+						ball_e->dirX*=-1;
 						break;
-					case 'V':
-						if(screen[ball_e->posX+ball_e->hor][(ball_e->posY)+ball_e->vert]==BRICK)
+					case EMPTY:
+						if(diagonal_detection==BRICK)
 						{
-							destroyBrick(ball_e->posX+ball_e->hor, (ball_e->posY)+ball_e->vert, game_e);
-							ball_e->hor*=-1;
+							destroyBrick(ball_e->posX+ball_e->dirX, ball_e->posY+ball_e->dirY, game_e);
+							ball_e->dirX*=-1;
 						}
-						if(screen[ball_e->posX+ball_e->hor][(ball_e->posY)+ball_e->vert]=='W')
+						if(diagonal_detection==WALL)
 						{
-							//destroyBrick(ball_e->posX+ball_e->hor, (ball_e->posY)+ball_e->vert);
-							ball_e->hor*=-1;
+							ball_e->dirX*=-1;
 						}
 						break;
 					case BRICK :
-						destroyBrick(ball_e->posX+ball_e->hor, (ball_e->posY), game_e);
-						//ball_e->vert*=-1;
-						ball_e->hor*=-1;
+						destroyBrick(ball_e->posX+ball_e->dirX, ball_e->posY, game_e);
+						ball_e->dirX*=-1;
 						break;
 					default :
-						ball_e->direction=5;
-						ball_e->vert=1;
-						ball_e->hor=0;
+						ball_e->dirY=1;
+						ball_e->dirX=0;
 				}
 				break;
 		}
 	}
-
-
-/*
-	switch (ball_e->direction)
-	{
-		case SE:
-			switch (screen[(ball_e->posX)+1][(ball_e->posY)+1])
-			{
-				case 'W':
-					if(screen[(ball_e->posX+1)][(ball_e->posY)+1]=='W'&&screen[(ball_e->posX)][(ball_e->posY+1)]=='R')
-					{
-						ball_e->direction=2;
-					}
-					else
-					{
-						ball_e->direction=3;
-					}
-					break;
-
-				case 'R':
-					ball_e->direction++;
-					break;
-				case 'B':
-					ball_e->direction++;
-					destroyBrick(ball_e->posX+1,ball_e->posY+1);
-					//screen[(((ball_e->posX+1)/2)*2)][(ball_e->posY)+1]='V';
-					//screen[(((ball_e->posX+1)/2)*2)+1][(ball_e->posY)+1]='V';
-					game_e->score+=2;
-
-
-					//((((ball_e->posX+1)%2)*2)+2)
-					//screen[(ball_e->posX)+1][(ball_e->posY)+1]='V';
-					//screen[(ball_e->posX)+2][(ball_e->posY)+1]='V';
-					//screen[(ball_e->posX)+1][(ball_e->posY)+1]='V';
-					//screen[((((ball_e->posX-1)/2)*2)+1)][(ball_e->posY)+1]='V';
-					break;
-				//default:
-					//printf("Erreur direction : %d \n", ball_e->direction);
-			}
-			break;
-
-		case NE:
-			switch (screen[(ball_e->posX)+1][(ball_e->posY)-1])
-			{
-				case 'W':
-					if(screen[(ball_e->posX)][(ball_e->posY)-1]=='W'&&screen[(ball_e->posX+1)][(ball_e->posY)]=='W')
-					{
-						ball_e->direction=3;
-					}
-					else
-					{
-						if(screen[(ball_e->posX)][(ball_e->posY)-1]=='W')
-					{
-						ball_e->direction--;
-					}
-						else
-						{
-							ball_e->direction++;
-						}
-					}
-					break;
-				case 'B':
-					ball_e->direction--;
-					destroyBrick(ball_e->posX+1,ball_e->posY-1);
-					//screen[(((ball_e->posX+1)/2)*2)][(ball_e->posY)-1]='V';
-					//screen[(((ball_e->posX+1)/2)*2)+1][(ball_e->posY)-1]='V';
-					game_e->score+=2;
-					//screen[(ball_e->posX)+1][(ball_e->posY)-1]='V';
-					//screen[(ball_e->posX)+2][(ball_e->posY)-1]='V';
-					//screen[((((ball_e->posX+1)/2)*2)+1)][(ball_e->posY)-1]='V';
-					break;
-				//default:
-					//printf("Erreur direction : %d \n", ball_e->direction);
-			}
-			break;
-
-		case NW:
-			switch (screen[(ball_e->posX)-1][(ball_e->posY)-1])
-			{
-				case 'W':
-					if(screen[(ball_e->posX)][(ball_e->posY)-1]=='W'&&screen[(ball_e->posX-1)][(ball_e->posY)]=='W')
-					{
-						ball_e->direction=0;
-					}
-					else
-					{
-						if(screen[(ball_e->posX)][(ball_e->posY)-1]=='W')
-						{
-							ball_e->direction++;
-						}
-						else
-						{
-							ball_e->direction--;
-						}
-					}
-					break;
-				case 'B':
-					ball_e->direction++;
-					destroyBrick(ball_e->posX-1,ball_e->posY-1);
-					//screen[(((ball_e->posX-1)/2)*2)][(ball_e->posY)-1]='V';
-					//screen[(((ball_e->posX-1)/2)*2)+1][(ball_e->posY)-1]='V';
-					game_e->score+=2;
-					//screen[(ball_e->posX)-1][(ball_e->posY)-1]='V';
-					//screen[(ball_e->posX)][(ball_e->posY)-1]='V';
-					//screen[((((ball_e->posX-1)/2)*2)+1)][(ball_e->posY)-1]='V';
-					break;
-				//default:
-					//printf("Erreur direction : %d \n", ball_e->direction);
-			}
-			break;
-		case SW:
-			switch (screen[(ball_e->posX)-1][(ball_e->posY)+1])
-			{
-				case 'W':
-					if(screen[(ball_e->posX-1)][(ball_e->posY)+1]=='W'&&screen[(ball_e->posX)][(ball_e->posY+1)]=='R')
-					{
-						ball_e->direction=1;
-					}
-					else
-					{
-						ball_e->direction=0;
-					}
-					break;
-
-				case 'R':
-					ball_e->direction--;
-					break;
-				case 'B':
-					ball_e->direction--;
-					destroyBrick(ball_e->posX-1,ball_e->posY+1);
-					//screen[(((ball_e->posX-1)/2)*2)][(ball_e->posY)+1]='V';
-					//screen[(((ball_e->posX-1)/2)*2)+1][(ball_e->posY)+1]='V';
-					game_e->score+=2;
-					//screen[((((ball_e->posX-1)/2)*2))][(ball_e->posY)+1]='V';
-					//screen[((((ball_e->posX-1)/2)*2)+1)][(ball_e->posY)+1]='V';
-					break;
-				//default:
-					//printf("Erreur direction : %d \n", ball_e->direction);
-			}
-			break;
-		//default:
-			//printf("ERREUR COLLISION MAJEURE");
-	}*/
-	return 0;
 }
 
-int moveBALL(struct ball_t *ball_e, struct game_t *game_e)
+void moveBALL(ball_t *ball_e, game_t *game_e)
 {
 	if(ball_e->moving==1)
 	{
-		screen[ball_e->posX][ball_e->posY]='V';
-		int res=collision(ball_e, game_e);
-
-
-		ball_e->posY=ball_e->posY+ball_e->vert;
-		ball_e->posX=ball_e->posX+ball_e->hor;
-		/*if(ball_e->vert==1)
-		{
-
-			ball_e->posY=ball_e->posY+1;
-			if(ball_e->hor==1)
-			{
-				ball_e->posX=ball_e->posX+1;
-			}
-			if(ball_e->hor==-1)
-			{
-				ball_e->posX=ball_e->posX-1;
-			}
-		}
-		if(ball_e->vert==-1)
-		{
-
-			ball_e->posY=ball_e->posY-1;
-			if(ball_e->hor==1)
-			{
-				ball_e->posX=ball_e->posX+1;
-			}
-			if(ball_e->hor==-1)
-			{
-				ball_e->posX=ball_e->posX-1;
-			}
-		}
-*/
-
-/*
-		switch (ball_e->direction)
-		{
-			case SE:
-				ball_e->posX=ball_e->posX+1;
-				ball_e->posY=ball_e->posY+1;
-				ball_e->vert=1;
-				ball_e->hor=1;
-				break;
-
-			case NE:
-				ball_e->posX=ball_e->posX+1;
-				ball_e->posY=ball_e->posY-1;
-				ball_e->vert=1;
-				ball_e->hor=-1;
-				break;
-
-			case NW:
-				ball_e->posX=ball_e->posX-1;
-				ball_e->posY=ball_e->posY-1;
-				ball_e->vert=-1;
-				ball_e->hor=-1;
-				break;
-			case SW:
-				ball_e->posX=ball_e->posX-1;
-				ball_e->posY=ball_e->posY+1;
-				ball_e->vert=-1;
-				ball_e->hor=1;
-				break;
-			default:
-				ball_e->posX=ball_e->posX-0;
-				ball_e->posY=ball_e->posY+5;
-				ball_e->vert=1;
-				ball_e->hor=0;
-		}*/
+		screen[ball_e->posX][ball_e->posY]=EMPTY;	/*!< empty the last position of the ball on the screen. */
+		collision(ball_e, game_e);
+		ball_e->posY=ball_e->posY+ball_e->dirY;
+		ball_e->posX=ball_e->posX+ball_e->dirX;
 	}
-	screen[ball_e->posX][ball_e->posY]=BALL;
-	return 0;
+	screen[ball_e->posX][ball_e->posY]=BALL;		/*!< draws the ball on it's new position on the screen. */
 }
 
-
-int drawScreen(struct game_t *game_e)
+void drawScreen(game_t *game_e)
 {
+	int y;
+	int x;
+	char xy;
 	system("clear");
-	//game_e->bricksRemaining=0;
-	for(int y=0;y<HEIGHT_MAX;y++)
+	for(y=0;y<HEIGHT_MAX;y++)
 	{
-		for(int x=0;x<WIDTH_MAX;x++)
+		for(x=0;x<WIDTH_MAX;x++)
 		{
-			switch (screen[x][y])
+			xy=screen[x][y];
+			if(xy=='E')
 			{
-				case BRICK:
-					printf("B");
-					//game_e->bricksRemaining+=1;
-					break;
-				case 'V':
-					printf(" ");
-					break;
-
-				case 'R':
-					printf("~");
-					break;
-				case 'o':
-					printf("o");
-					break;
-				case 'E':
-					printf(" ");
-					break;
-				default :
-					printf("W");
+				printf(" ");
+			}
+			else
+			{
+				printf("%c", xy);
 			}
 		}
-		//printf("\n");
 	}
-	printf("SCORE : %d BRIQUES RESTANTES : %d \n", game_e->score, game_e->bricksRemaining);
-	printf("beginning : %d \n",game_e->bricksBeginning);
+
+	/**
+	 * draws the bottom of the screen with different information for the user.
+	 */
+	int i;
+	for(i=0; i<WIDTH_MAX; i++)
+	{
+		printf("=");
+	}
+	// draws the next line (the half line containing info)
+	for(i=0; i<23; i++)
+	{
+		printf("=");
+	}
+	printf(" SCORE: %d | BRICKS: %d | BALLS: %d ", game_e->score, game_e->bricksRemaining, game_e->nbBall);
+	for(i=0; i<21; i++)
+	{
+		printf("=");
+	}
 	fflush(stdout);
 	if(game_e->bricksRemaining==0)
 	{
 		game_e->end=1;
 	}
-	//return game_e->bricksRemaining;
-	return 0;
 }
+
 void *fDisplay(void *arg)
 {
-	int rB=1;
 	all_t *all_e = (all_t *)arg;
 	while(all_e->all_game_e->end==0)
 	{
-		//usleep(500000);
 		usleep(64000);
-		rB=drawScreen(all_e->all_game_e);
-		CHECK(rB,"Erreur lors de l'affichage a l'ecran");
-		printf("affichage : %d    ", screen[all_e->all_ball_e->posX][((all_e->all_ball_e->posY)+1)]);
-		printf("vert : %d   ", all_e->all_ball_e->vert);
-		printf("hor : %d   ", all_e->all_ball_e->hor);
-		printf("posX : %d   ", all_e->all_ball_e->posX);
-		printf("posY : %d   \n", all_e->all_ball_e->posY);
+		drawScreen(all_e->all_game_e);
 	}
 	pthread_exit(EXIT_SUCCESS);
 }
-
 
 int kbhit()
 {
@@ -619,7 +451,6 @@ int kbhit()
     FD_SET(0, &fds);
     return select(1, &fds, NULL, NULL, &tv);
 }
-
 int getch()
 {
     int r;
@@ -630,187 +461,60 @@ int getch()
         return c;
     }
 }
+
 void *fInput(void *arg)
 {
-	int c;
-	//ball_t *ball_e = (ball_t *)arg;
+	char c;
 	all_t *all_e = (all_t *)arg;
-	//(all_e->all_game_e->end==0&&c!='c')
 	while(all_e->all_game_e->end==0)
 	{
-		//usleep(16000);
-
-		//pthread_mutex_lock(&consoleAccess);
-		//sem_wait(&termAccess);
-		//fflush(stdin);
 		if (kbhit())
 		{
-        /* do some work */
 			c=getch();
-			if(c=='c')
+			switch(c)
 			{
-				all_e->all_game_e->end=1;
-				break;
-			}
-			if(c=='b')
-			{
-				all_e->all_game_e->nbBall-=1;
-				all_e->all_ball_e->posX=(WIDTH_MAX/2)-1;
-				all_e->all_ball_e->posY=HEIGHT_MAX-10;
-			}
-			if(c=='o')
-			{
-				if(all_e->all_game_e->turbo==1)
-				{
-					all_e->all_game_e->turbo=100;
-				}
-				else
-				{
-					all_e->all_game_e->turbo=1;
-				}
-			}
-			if(c=='p')
-			{
-				if(all_e->all_ball_e->moving==0)
-				{
-					all_e->all_ball_e->moving=1;
-				}
-				else
-				{
-					all_e->all_ball_e->moving=0;
-				}
-			}
-			else
-			{
-				//pthread_mutex_lock(&screenAccess);
-				moveRacket(all_e->all_racket_e, c);
-				//pthread_mutex_unlock(&screenAccess);
+				case 'c':
+					all_e->all_game_e->end=1;
+					break;
+				case 'b':
+					all_e->all_game_e->nbBall-=1;
+					break;
+				case 'o':
+					if(all_e->all_game_e->turbo==1)
+					{
+						all_e->all_game_e->turbo=100;
+					}
+					else
+					{
+						all_e->all_game_e->turbo=1;
+					}
+					break;
+				case 'p':
+					if(all_e->all_ball_e->moving==0)
+					{
+						all_e->all_ball_e->moving=1;
+					}
+					else
+					{
+						all_e->all_ball_e->moving=0;
+					}
+					break;
+				case 'i':
+					if(all_e->all_game_e->cheat==0)
+					{
+						all_e->all_game_e->cheat=1;
+						placeHugeRacket();
+					}
+					else
+					{
+						all_e->all_game_e->cheat=0;
+						removeHugeRacket();
+					}
+					break;
+				default :
+					moveRacket(all_e->all_racket_e, c);
 			}
 		}
-		//c = getchar();
-		//fread(&c, sizeof(c),1,stdin);
-		//fflush(stdin);
-		//rB=drawScreen(all_e->all_game_e);
-
-
-		//system ("/bin/stty cooked");
-		//sem_post(&termAccess);
-		//pthread_mutex_unlock(&consoleAccess);
-		//fflush(stdin);
-
-		// use system call to set terminal behaviour to more normal behaviour
 	}
-
 	pthread_exit(EXIT_SUCCESS);
-}
-
-
-
-int startGameUI()
-{
-	void * ret;
-	pthread_t th;
-
-	struct termios infos;
-
-	if (tcgetattr(STDIN_FILENO, &infos) == -1) // on récupère les infos du terminal
-	{
-	  fprintf(stderr, "Erreur tcgetattr.\n");
-	  return (EXIT_FAILURE);
-	}
-	infos.c_lflag &= ~ECHO; // on le passe en mode non-echo
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &infos) == -1) // on set les infos du terminal
-	{
-	  fprintf(stderr, "Erreur tcsetattr.\n");
-	  return (EXIT_FAILURE);
-	}
-
-
-
-
-
-
-	sem_init(&termAccess,PTHREAD_PROCESS_SHARED,1);
-	/*
-	// INIT
-	*/
-	system("clear");
-	int res;
-
-	res=placeElementFrom(0,0, WIDTH_MAX,3, 'W');
-	res=placeElementFrom(0,0, 5, HEIGHT_MAX, 'W');
-	res=placeElementFrom(WIDTH_MAX-2,0, WIDTH_MAX, HEIGHT_MAX, 'W');
-
-	CHECK(res,"Erreur lors du placement de l'element : mur");
-
-	res=placeElementFrom(2,3, WIDTH_MAX-2, HEIGHT_MAX, 'V');
-	CHECK(res,"Erreur lors du placement de l'element : void");
-	struct racket_t racket_e = { (WIDTH_MAX/2)-2,HEIGHT_MAX-2 };
-	res=moveRacket(&racket_e, '0');
-	res=placeRacket((WIDTH_MAX/2)-2,HEIGHT_MAX-3);
-	CHECK(res,"Erreur lors du placement de l'element : raquette");
-	//res=placeElementFrom(2, 5, WIDTH_MAX-2, 9, 'B');
-	//res=placeElementFrom(3, HEIGHT_MAX-4, 6, HEIGHT_MAX-3, 'B');
-
-	game_t game_e = { 0 ,0,1,0};
-	game_e.turbo=1;
-	game_e.bricksRemaining=0;
-	//game_e.bricksRemaining;
-	placeBricks(2, 5, WIDTH_MAX-2, 9, &game_e);
-	CHECK(res,"Erreur lors du placement de l'element : BRICK");
-	res=placeElementFrom(2,HEIGHT_MAX-1, WIDTH_MAX-2, HEIGHT_MAX, 'E');
-	struct ball_t ball_e3 = { WIDTH_MAX-6 ,14,2,1 };
-	ball_t ball_e = { (WIDTH_MAX/2)-8 ,HEIGHT_MAX-11,0,1,1,1};
-	struct ball_t ball_e2 = { (WIDTH_MAX/2)-3 ,HEIGHT_MAX-10,1,1 };
-	struct ball_t ball_e4 = { (WIDTH_MAX/2)-6 ,HEIGHT_MAX-6,3,1 };
-	//res=drawScreen(&game_e
-	res=placeBALL(&ball_e);
-	CHECK(res,"Erreur lors du placement de l'element : BALLe");
-
-
-	all_t *all_e = malloc(sizeof(all_t));
-	all_e->all_game_e= &game_e;
-	all_e->all_ball_e= &ball_e;
-	all_e->all_racket_e= &racket_e;
-
-	pthread_create(&th, NULL, fInput, all_e);
-	pthread_create(&th, NULL, fDisplay, all_e);
-	int rB=1;
-	// use system call to make terminal send all keystrokes directly to stdin
-	system ("/bin/stty raw");
-
-	/*
-	// routine affichage
-	*/
-	while(rB!=0&& game_e.end==0)
-	{
-		//usleep(500000);
-		usleep(GAME_SPEED/(game_e.turbo));
-		//usleep(100);
-		//pthread_mutex_lock(&screenAccess);
-		moveBALL(&ball_e, &game_e);
-		//moveBALL(&ball_e2, &game_e);
-		//moveBALL(&ball_e3, &game_e);
-		//moveBALL(&ball_e4, &game_e);
-		//pthread_mutex_unlock(&screenAccess);
-		//pthread_mutex_lock(&consoleAccess);
-		//system ("/bin/stty cooked");
-		//sem_wait(&termAccess);
-		//rB=drawScreen(&game_e);
-		CHECK(rB,"Erreur lors de l'affichage a l'ecran");
-		//sem_post(&termAccess);
-		//system ("/bin/stty raw");
-		//pthread_mutex_unlock(&consoleAccess);
-	}
-	infos.c_lflag |= ECHO; // on le passe en mode non-echo
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &infos) == -1) // on set les infos du terminal
-	{
-	  fprintf(stderr, "Erreur tcsetattr.\n");
-	  return (EXIT_FAILURE);
-	}
-	system ("/bin/stty cooked");
-	game_e.end=1;
-	pthread_join(th, &ret);
-	sem_destroy(&termAccess);
-	return game_e.score;
 }
