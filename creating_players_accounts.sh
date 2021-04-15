@@ -33,7 +33,4 @@ echo "player:player" | chpasswd
 # Configuring home
 cp build/client /home/player
 
-# Ajout de la commande de lancement du client
-./update_client_sh.sh
-
 exit 0
