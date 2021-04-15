@@ -1,5 +1,0 @@
-Casse brique "br" à petite échelle
-GUI dans le shell
-Etat des parties transmis par chaine de caractère formatée
-
-connexion SSH vers la machine qui fait marcher les clients et le serveur.
