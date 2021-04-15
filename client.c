@@ -135,6 +135,7 @@ int main(int argc, char *argv[]) {
   notifyServerThatGameHasStarted(msgId);
   puts("Game will start now !");
   int score = startGameUI();
+	system("clear"); // Clear the screen from UI printing.
   sendScore(msgId, score);
   retrieveScores(msgId, &scores);
   printFinalRank(msgId, scores);
