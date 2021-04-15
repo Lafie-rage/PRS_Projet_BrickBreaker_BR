@@ -1,5 +1,5 @@
 /**
- * /file server_kaasbriik.c
+ * /file server_kassbriik.c
  * /author Corentin DESTREZ & Valentin GUIBERTEAU
  * /date 09 Apr 2021
  * /brief Source code of the server's library

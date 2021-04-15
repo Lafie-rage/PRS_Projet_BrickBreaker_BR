@@ -1,5 +1,5 @@
 /**
- * /file server_kaasbriik.h
+ * /file server_kassbriik.h
  * /author Corentin DESTREZ & Valentin GUIBERTEAU
  * /date 09 Apr 2021
  * /brief Header of the server's library

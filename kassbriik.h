@@ -1,5 +1,5 @@
 /**
- * \file kaasbriik_signal.h
+ * \file kassbriik_signal.h
  * \author Corentin DESTREZ & Valentin GUIBERTEAU
  * \date 09 Apr 2021
  * \brief Header of the client's and server's library

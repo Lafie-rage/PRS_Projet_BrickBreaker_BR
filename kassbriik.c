@@ -1,5 +1,5 @@
 /**
- * /file kaasbriik.c
+ * /file kassbriik.c
  * /author Corentin DESTREZ & Valentin GUIBERTEAU
  * /date 12 Apr 2021
  * /brief Source code of the client's library
